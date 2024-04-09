@@ -1,0 +1,14 @@
+{
+  "files": {
+    "main.css": "/bugdeto/static/css/main.91adf274.css",
+    "main.js": "/bugdeto/static/js/main.4e773bd1.js",
+    "static/media/tellstory.png": "/bugdeto/static/media/tellstory.d8c90e102edec363d4bc.png",
+    "index.html": "/bugdeto/index.html",
+    "main.91adf274.css.map": "/bugdeto/static/css/main.91adf274.css.map",
+    "main.4e773bd1.js.map": "/bugdeto/static/js/main.4e773bd1.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.91adf274.css",
+    "static/js/main.4e773bd1.js"
+  ]
+}
