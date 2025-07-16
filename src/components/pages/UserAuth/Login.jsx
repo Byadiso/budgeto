@@ -70,7 +70,7 @@ function Login() {
                   name="email"
                   onChange={handleChange}
                   className="email"
-                  placeholder="Email address or Username"
+                  placeholder="Email address or Username or email ID"
                   id="email_login"
                 />
                 <input
