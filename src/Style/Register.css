@@ -1,189 +1,325 @@
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+*:focus-visible {
+  outline: 2px solid var(--teal);
+  outline-offset: 2px;
+}
 
 :root {
-    
-    --blueColor: #008DDA;
-    --blueActiveColor: #29b4e2;
-    --redColor: #fa1717;  
-    --greyColor: #4b4a4a;
+  /* legacy vars kept for anything else in the app referencing them */
+  --blueColor: #008dda;
+  --blueActiveColor: #29b4e2;
+  --redColor: #fa1717;
+  --greyColor: #4b4a4a;
+  --backgroundGrey: rgba(244, 244, 244, 0.918);
 
+  /* Budgeto ledger palette */
+  --ink: #1c2b29;
+  --paper: #edf1e9;
+  --paper-card: #fbfaf4;
+  --teal: #0e7c86;
+  --teal-deep: #0b646c;
+  --positive: #2f7a4d;
+  --negative: #b23a2e;
+  --line: #cfd8cb;
+  --muted: #5b665f;
 }
 
+@import url("https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@500&display=swap");
 
-/* all styles  ---------------------------*/
-
-
-* {
-    box-sizing: border-box;
+.register_page {
+  min-height: 100vh;
+  background: var(--paper);
+  font-family: "Inter", -apple-system, BlinkMacSystemFont, sans-serif;
+  color: var(--ink);
+  padding-bottom: 60px;
 }
 
-*:focus {
-    outline: none;
+.register_topbar {
+  padding: 20px 24px 0;
 }
 
-/* body syles  */
-
-body {
-    font-family: 'Roboto',  sans-serif;
-    background-color: var(--blueColor);
-    background-position: center;
-    background-repeat: no-repeat;
-    background-size: cover;
-    margin: 0;
+.register_back {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  text-decoration: none;
+  color: var(--muted);
+  font-size: 0.9rem;
+  font-weight: 500;
+  transition: color 0.15s ease;
 }
 
-
-/* for errors */
-
-#error {
-    color: var(--error);
+.register_back:hover {
+  color: var(--ink);
 }
 
-.error {
-    color: var(--redColor);
-}
-.register_container {    
-        display: flex;
-        flex-direction: row;
-        padding-bottom: 65px;
-        align-items: center;
-        justify-content:center;
-        padding-left: 200px    
+.register_register {
+  max-width: 480px;
+  margin: 0 auto;
+  padding: 48px 24px 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  animation: register_fade_in 0.4s ease both;
 }
 
-.register_content {
-    display: flex;
-    justify-content: center;
-    align-items: start;
-    flex-direction: column;
-    color: var(--whiteColor);
-    width: 100%;
-    margin: 20px;
-    padding-bottom: 20px;
+@keyframes register_fade_in {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
-
-
-
-.register_form {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    margin: 50px;
-    padding: 50px;
-    background: var(--whiteColor);
-    border: 5px solid var(--whiteColor);
-    border-radius: 10px;
+.register_header {
+  text-align: center;
+  margin-bottom: 24px;
 }
+
+.register_kicker {
+  margin: 0 0 4px;
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: var(--teal-deep);
+  letter-spacing: 0.02em;
+}
+
+.register_title {
+  margin: 0;
+  font-family: "Fraunces", Georgia, serif;
+  font-weight: 600;
+  font-size: 2.1rem;
+  letter-spacing: -0.01em;
+  color: var(--ink) !important;
+}
+
+/* card */
+
+.register_card {
+  width: 100%;
+  background: var(--paper-card);
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  padding: 28px;
+}
+
+.register_message {
+  text-align: center;
+  font-size: 0.85rem;
+  font-weight: 500;
+  border-radius: 8px;
+  padding: 10px 12px;
+  margin: 0 0 18px;
+}
+
+.register_message--error {
+  color: var(--negative);
+  background: rgba(178, 58, 46, 0.1);
+}
+
+.register_message--success {
+  color: var(--positive);
+  background: rgba(47, 122, 77, 0.1);
+}
+
+/* form */
 
 .register_form_item {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: start;
-    margin-bottom: 20px;
-    background: var(--whiteColor);
-    padding: 1px 10px 1px 10px;
-    color: var(--blackColor)
+  display: flex;
+  flex-direction: column;
 }
 
-.login_button:hover{
-cursor: pointer;
+.register_row {
+  display: flex;
+  gap: 14px;
 }
 
-
-
-
-
-/* input  */
-input[type=text], input[type=password], textarea {
-    width: 100%;
-    padding: 12px 20px;
-    margin: 8px 0;
-    display: inline-block;
-    color: var(--textColorGrey);
-    background: var(--whiteColor);
-    border: 1px solid var(--blueColorContrast);
+.register_row .register_field {
+  flex: 1;
+  min-width: 0;
 }
 
-
-.form_login input {
-    border-radius: 20px;
+.register_field {
+  margin-bottom: 18px;
 }
 
-.register {
-    color: var(--whiteColor);
-    background-color: var(--blueColorContrast);
-    border: none;
-
-    padding: 8px;
-    width: 100%;
-    padding-left: 20px;
-    padding-right: 20px;
-    cursor: pointer;
-    margin-right: 5px;
-    margin-left: 10px;
+.register_label {
+  display: block;
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: var(--muted);
+  margin-bottom: 6px;
 }
 
-.login_register {
-    display: flex;
-    justify-content: center;
-    flex-direction: column;
-    align-items: center;
-    margin: 20px;
+/* input wrapper — flex-based so icon/input never overlap */
 
+.register_input_wrap {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  padding: 0 14px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: var(--paper);
+  transition: border-color 0.15s ease, background 0.15s ease;
 }
 
-.login_register a {
-    text-decoration: none;
-
+.register_input_wrap:focus-within {
+  border-color: var(--teal);
+  background: var(--paper-card);
 }
 
-.hide {
-    display: none;
+.register_input_icon {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  color: var(--muted);
 }
 
-#alert_message_login, #alert_message_register {
-    background: green;
-    color: white;
-    margin: 10px;
-    display: flex;
-    justify-content: center;
+.register_input {
+  flex: 1;
+  min-width: 0;
+  border: none;
+  background: transparent;
+  padding: 12px 0;
+  color: var(--ink);
+  font-family: inherit;
+  font-size: 0.95rem;
+  line-height: 1.4;
 }
 
-/* ..........register.....section..... */
-.hide {
-    display: none
+.register_input:focus {
+  outline: none;
 }
 
-.bottom_login {
-    color: var(--whiteColor);
-    display: flex;
-    justify-content: center;
+.register_input::placeholder {
+  color: var(--muted);
+  opacity: 0.7;
 }
 
-.register{
-    color: var(--whiteColor);
-    background-color: var(--blueColor);
-    border: none;
-    border-radius: 1px;
-    padding: 10px;
-    width: 100%;
-    cursor: pointer;
+.register_submit {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--paper-card);
+  background: var(--teal);
+  border: none;
+  border-radius: 8px;
+  padding: 12px;
+  width: 100%;
+  font-family: inherit;
+  font-size: 0.95rem;
+  font-weight: 600;
+  cursor: pointer;
+  margin-top: 6px;
+  transition: background-color 0.15s ease, opacity 0.15s ease;
 }
 
+.register_submit:hover {
+  background: var(--teal-deep);
+}
 
+/* signup / login panel — mirrors ledger_archive */
 
+.register_signup {
+  width: 100%;
+  margin-top: 20px;
+  padding: 20px;
+  border-radius: 10px;
+  background: var(--ink);
+  color: var(--paper);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
+}
 
-/* for responsiveness */
+.register_signup_text h4 {
+  margin: 0 0 4px;
+  font-family: "Fraunces", Georgia, serif;
+  font-weight: 600;
+  font-size: 1.05rem;
+}
+
+.register_signup_text p {
+  margin: 0;
+  font-size: 0.85rem;
+  color: rgba(237, 241, 233, 0.75);
+}
+
+.register_signup_button {
+  flex-shrink: 0;
+  text-decoration: none;
+  color: var(--ink);
+  background: var(--paper);
+  font-weight: 600;
+  font-size: 0.85rem;
+  padding: 8px 16px;
+  border-radius: 8px;
+  transition: background 0.15s ease;
+}
+
+.register_signup_button:hover {
+  background: #fff;
+}
+
+/* success state */
+
+.register_success {
+  max-width: 480px;
+  margin: 80px auto 0;
+  padding: 32px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  text-align: center;
+  background: var(--paper-card);
+  border: 1px solid var(--line);
+  border-radius: 10px;
+}
+
+.register_success_text {
+  margin: 0;
+  color: var(--positive);
+  font-weight: 600;
+}
+
+/* reduced motion */
+
+@media (prefers-reduced-motion: reduce) {
+  .register_register {
+    animation: none;
+  }
+}
+
+/* responsive */
+
 @media only screen and (max-width: 720px) {
-.register_container{  
-       padding: 0px;  
-    margin-bottom: 75px;   
- 
-}
-    
-    .register_content {
-        display: none;
-    }
+  .register_register {
+    padding: 32px 16px 0;
+  }
+
+  .register_title {
+    font-size: 1.7rem;
+  }
+
+  .register_card {
+    padding: 22px;
+  }
+
+  .register_row {
+    flex-direction: column;
+    gap: 0;
+  }
 }

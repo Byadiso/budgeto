@@ -6,8 +6,8 @@ import { createTransaction } from "../../firebase/Transaction";
 import { isAuthenticated } from "../../firebase/Authentication";
 import { ValidateTransaction, waitToLoad } from "../../Helpers/Helpers";
 import NoAccess from "./ErrorComponents/NoAccess";
-import { Link, useNavigate } from "react-router-dom";  // Import useNavigate
-import ArrowBackIcon from '@mui/icons-material/ArrowBack';
+import { Link, useNavigate } from "react-router-dom";
+import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 
 function AddRecord() {
   const [errorMessage, setErrorMessage] = useState("");
@@ -16,42 +16,27 @@ function AddRecord() {
   const [data, setData] = useState({});
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(true);
-  const [isSubmitted, setIsSubmitted] = useState(false); 
+  const [isSubmitted, setIsSubmitted] = useState(false);
+  const [isSaving, setIsSaving] = useState(false);
 
-  const navigate = useNavigate();  
-
-  const style = {
-    position: "absolute",
-    display: "flex",
-    justifyContent: "center",
-    alignItems: "center",
-    flexDirection: "column",
-    paddingBottom: "50px",
-    marginTop: "20px",
-    top: "50%",
-    left: "50%",
-    transform: "translate(-50%, -50%)",
-    width: 500,
-    bgcolor: "background.paper",
-    p: 4,
-  };
+  const navigate = useNavigate();
 
   const handleOnClick = () => {
     let error = ValidateTransaction(data);
-    setIsSubmitted(true); // Mark form as submitted
+    setIsSubmitted(true);
     setErrorMessage(error);
     if (!error) {
+      setIsSaving(true);
       createTransaction(data)
         .then(() => {
           setSuccessMessage("Transaction has been created successfully");
-
-          
           setTimeout(() => {
-            navigate("/Dashboard");  
-          }, 1000);  
+            navigate("/Dashboard");
+          }, 1000);
         })
         .catch((err) => {
           console.error("Error creating transaction:", err);
+          setIsSaving(false);
         });
     }
   };
@@ -71,66 +56,48 @@ function AddRecord() {
   }, []);
 
   return (
-  
-      <div style={{ display: "flex", alignItems: "center", flexDirection:"column" }}>
-       
-       <div
-  style={{
-    paddingTop: "20px",
-    margin: "20px",
-    display: "flex",
-    justifyContent: "center",
-    alignItems: "center",
-    color: "white",
-  }}
->
-  <Link
-    to="/Dashboard"
-    style={{
-      color: "white",
-      display: "flex",
-      alignItems: "center",
-      textDecoration: "none", 
-    }}
-  >
-    <ArrowBackIcon style={{ marginRight: "8px" }} /> Go back
-  </Link>
-</div>
+    <div className="record_page">
+      <div className="record_topbar">
+        <Link to="/Dashboard" className="record_back">
+          <ArrowBackIcon fontSize="small" />
+          Go back
+        </Link>
+      </div>
 
+      {isLoggedIn ? (
+        <div className="record_register">
+          <header className="record_header">
+            <p className="record_kicker">New entry</p>
+            <h1 className="record_title">Add a transaction</h1>
+          </header>
 
-     
-        {isLoggedIn ? (
-          <div style={style} className="Add_blog_container">
-            <h2 style={{ color: "white", marginBottom: "50px" }}>
-              Your Treasure!
-            </h2>
-            <form>
-            
-              <InputComponent
-                name="title"
-                handleChange={handleChange}
-                label="Title"
-              />
-              <InputComponent
-                name="amount"
-                handleChange={handleChange}
-                label="Amount"
-              />
+          <div className="record_card Add_blog_container">
+            <form className="record_form_item">
+              <div className="record_field">
+                <InputComponent
+                  name="title"
+                  handleChange={handleChange}
+                  label="Title"
+                />
+              </div>
 
-             
-              <div style={{ marginTop: "20px", color: "white", width: "100%" }}>
+              <div className="record_field">
+                <InputComponent
+                  name="amount"
+                  handleChange={handleChange}
+                  label="Amount"
+                />
+              </div>
+
+              <div className="record_field">
+                <label htmlFor="type" className="record_label">
+                  Type
+                </label>
                 <select
                   name="type"
                   id="type"
                   onChange={handleChange}
-                  style={{
-                    padding: "10px",
-                    width: "100%",
-                    marginTop: "10px",
-                    background: "#fff",
-                    borderRadius: "4px",
-                    border: "1px solid #ccc",
-                  }}
+                  className="record_select"
                 >
                   <option value="">Select type</option>
                   <option value="income">Income</option>
@@ -140,30 +107,34 @@ function AddRecord() {
                 </select>
               </div>
 
-             
-              {isSubmitted && (
+              {isSubmitted && (errorMessage || successMessage) && (
                 <p
-                  className={errorMessage ? "errorMessage" : "successMessage"}
+                  className={
+                    errorMessage
+                      ? "record_message record_message--error"
+                      : "record_message record_message--success"
+                  }
                 >
                   {successMessage ? successMessage : errorMessage}
                 </p>
               )}
 
-           
               <Button
                 variant="contained"
                 onClick={handleOnClick}
-                style={{ marginTop: "50px" }}
+                disabled={isSaving}
+                className="record_submit"
+                disableElevation
               >
-                Create
+                {isSaving ? "Saving…" : "Create"}
               </Button>
             </form>
           </div>
-        ) : (
-          !loading && <NoAccess />
-        )}
-      </div>
-   
+        </div>
+      ) : (
+        !loading && <NoAccess />
+      )}
+    </div>
   );
 }
 

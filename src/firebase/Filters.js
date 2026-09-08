@@ -246,6 +246,8 @@ export function listTransactionsByMonthAndType(transactions, monthType) {
 }
 
 
+
+
 // list what is not mine like credit or what I need to pay back
 export function filterWhatIsNotMine(transactions) {
   let totalWhatIsNotMine = 0;

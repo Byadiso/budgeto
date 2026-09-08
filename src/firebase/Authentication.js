@@ -36,6 +36,17 @@ export const isAuthenticatedDetails = (setIsloggedState, setUserId) => {
   });
 };
 
+
+// export const isAuthenticatedDetails = (callback) => {
+//   return onAuthStateChanged(Auth, (user) => {
+//     if (user) {
+//       callback({ isLoggedIn: true, userId: user.uid });
+//     } else {
+//       callback({ isLoggedIn: false, userId: null });
+//     }
+//   });
+// };
+
 export const getLoggedUser = (setIsloggedState) => {
   onAuthStateChanged(Auth, (user) => {
     if (user) {

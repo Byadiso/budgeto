@@ -14,8 +14,11 @@ function Reports() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [loading, setLoading] = useState(true);
   const [transactions, setTransactions] = React.useState([]);
+  const [dataList, setDataList] = useState([]);
 
   const { filteredBenefits, totalBenefits } = filterBenefits(transactions);
+
+
 
   const list = (setDataList) => {
     return listTransactions(setDataList);
@@ -26,6 +29,7 @@ function Reports() {
     waitToLoad(setLoading);
   }, [isLoggedIn]);
 
+  
   return (
     <div className="reports_page">
       <div className="reports_topbar">

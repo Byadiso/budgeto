@@ -36,6 +36,131 @@
     box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
 }
 
+/* 403 / No access page */
+
+.no_access_page {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--paper);
+  font-family: "Inter", -apple-system, BlinkMacSystemFont, sans-serif;
+  padding: 24px;
+}
+
+.no_access_card {
+  width: 100%;
+  max-width: 420px;
+  background: var(--paper-card);
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  padding: 40px 32px;
+  text-align: center;
+  animation: no_access_fade_in 0.4s ease both;
+}
+
+@keyframes no_access_fade_in {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.no_access_icon {
+  width: 52px;
+  height: 52px;
+  margin: 0 auto 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background: rgba(178, 58, 46, 0.1);
+  color: var(--negative);
+}
+
+.no_access_code {
+  margin: 0 0 4px;
+  font-family: "IBM Plex Mono", monospace;
+  font-size: 0.85rem;
+  font-weight: 500;
+  letter-spacing: 0.06em;
+  color: var(--muted);
+}
+
+.no_access_title {
+  margin: 0 0 12px;
+  font-family: "Fraunces", Georgia, serif;
+  font-weight: 600;
+  font-size: 1.6rem;
+  color: var(--ink) !important;
+}
+
+.no_access_text {
+  margin: 0 0 28px;
+  font-size: 0.95rem;
+  line-height: 1.5;
+  color: var(--muted) !important;
+}
+
+.no_access_page_name {
+  color: var(--teal-deep);
+  font-weight: 600;
+}
+
+.no_access_actions {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.no_access_primary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+  color: var(--paper-card);
+  background: var(--teal);
+  border: none;
+  border-radius: 8px;
+  padding: 12px;
+  font-size: 0.95rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.15s ease;
+}
+
+.no_access_primary:hover {
+  background: var(--teal-deep);
+}
+
+.no_access_secondary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  text-decoration: none;
+  color: var(--muted);
+  font-size: 0.85rem;
+  font-weight: 500;
+  padding: 8px;
+  transition: color 0.15s ease;
+}
+
+.no_access_secondary:hover {
+  color: var(--ink);
+}
+
+@media only screen and (max-width: 480px) {
+  .no_access_card {
+    padding: 32px 24px;
+  }
+}
+
+
 /* For Mobile Responsiveness */
 @media only screen and (max-width: 720px) {
 

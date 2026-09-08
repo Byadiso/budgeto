@@ -1,145 +1,274 @@
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+*:focus-visible {
+  outline: 2px solid var(--teal);
+  outline-offset: 2px;
+}
+
 :root {
-    --blueColor: #008DDA;
-    --blueActiveColor: #29b4e2;
-    --redColor: #fa1717;  
-    --greenColor: #137323;  
-    --greyColor: #4b4a4a;
-    --whiteColor: #FFFFFF; 
-    --textColorGrey: #4b4a4a; 
+  /* legacy vars kept for anything else in the app referencing them */
+  --blueColor: #008dda;
+  --blueActiveColor: #29b4e2;
+  --redColor: #fa1717;
+  --greenColor: #137323;
+  --greyColor: #4b4a4a;
+  --whiteColor: #ffffff;
+  --textColorGrey: #4b4a4a;
+
+  /* Budgeto ledger palette */
+  --ink: #1c2b29;
+  --paper: #edf1e9;
+  --paper-card: #fbfaf4;
+  --teal: #0e7c86;
+  --teal-deep: #0b646c;
+  --positive: #2f7a4d;
+  --negative: #b23a2e;
+  --line: #cfd8cb;
+  --muted: #5b665f;
 }
 
-/* all styles  ---------------------------*/
+@import url("https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@500&display=swap");
 
-* {
-    box-sizing: border-box;
+.record_page {
+  min-height: 100vh;
+  background: var(--paper);
+  font-family: "Inter", -apple-system, BlinkMacSystemFont, sans-serif;
+  color: var(--ink);
+  padding-bottom: 60px;
 }
 
-*:focus {
-    outline: none;
+.record_topbar {
+  padding: 20px 24px 0;
 }
 
-/* body styles  */
-body {
-    font-family: 'Roboto', sans-serif;
-    background-color: var(--whiteColor);
-    margin: 0;
+.record_back {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  text-decoration: none;
+  color: var(--muted);
+  font-size: 0.9rem;
+  font-weight: 500;
+  transition: color 0.15s ease;
 }
 
-/* hero section */
-section {
-    background-color: #fff;
-    color: var(--whiteColor);
-    margin: 20px;
-    margin-bottom: 70px;
+.record_back:hover {
+  color: var(--ink);
 }
 
+.record_register {
+  max-width: 480px;
+  margin: 0 auto;
+  padding: 24px 24px 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  animation: record_fade_in 0.4s ease both;
+}
 
-/* when error happens. */
+@keyframes record_fade_in {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.record_header {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.record_kicker {
+  margin: 0 0 4px;
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: var(--teal-deep);
+  letter-spacing: 0.02em;
+}
+
+.record_title {
+  margin: 0;
+  font-family: "Fraunces", Georgia, serif;
+  font-weight: 600;
+  font-size: 1.9rem;
+  letter-spacing: -0.01em;
+  color: var(--ink) !important;
+}
+
+/* card */
+
+.record_card {
+  width: 100%;
+  background: var(--paper-card);
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  padding: 28px;
+}
+
+.record_form_item {
+  display: flex;
+  flex-direction: column;
+}
+
+.record_field {
+  margin-bottom: 18px;
+  width: 100%;
+}
+
+.record_label {
+  display: block;
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: var(--muted);
+  margin-bottom: 6px;
+}
+
+.record_select {
+  width: 100%;
+  padding: 12px 14px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: inherit;
+  font-size: 0.95rem;
+  transition: border-color 0.15s ease, background 0.15s ease;
+}
+
+.record_select:focus {
+  border-color: var(--teal);
+  background: var(--paper-card);
+}
+
+.record_message {
+  text-align: center;
+  font-size: 0.85rem;
+  font-weight: 500;
+  border-radius: 8px;
+  padding: 10px 12px;
+  margin: 0 0 18px;
+}
+
+.record_message--error {
+  color: var(--negative);
+  background: rgba(178, 58, 46, 0.1);
+}
+
+.record_message--success {
+  color: var(--positive);
+  background: rgba(47, 122, 77, 0.1);
+}
+
+.record_submit.MuiButton-root {
+  width: 100%;
+  margin-top: 6px;
+  padding: 12px;
+  border-radius: 8px;
+  background-color: var(--teal);
+  font-family: inherit;
+  font-size: 0.95rem;
+  font-weight: 600;
+  text-transform: none;
+  box-shadow: none;
+}
+
+.record_submit.MuiButton-root:hover {
+  background-color: var(--teal-deep);
+  box-shadow: none;
+}
+
+.record_submit.MuiButton-root.Mui-disabled {
+  opacity: 0.7;
+  color: var(--paper-card);
+  background-color: var(--teal);
+}
+
+/* legacy classes still referenced elsewhere — kept as-is */
+
 .error_block {
-    padding: 50px 20px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin: 100px 0; 
+  padding: 50px 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 100px 0;
 }
 
 .errorMessage {
-    color: var(--redColor);
-    background-color: var(--whiteColor);
-    padding: 7px;
-    border-radius: 5px;
+  color: var(--negative);
+  background-color: var(--whiteColor);
+  padding: 7px;
+  border-radius: 5px;
 }
 
 .successMessage {
-    color: var(--greenColor);
-    background-color: var(--whiteColor);
-    padding: 7px;
-    border-radius: 5px;
+  color: var(--positive);
+  background-color: var(--whiteColor);
+  padding: 7px;
+  border-radius: 5px;
 }
 
-
-
-/* button controllers */
 .button_control button {
-    color: var(--blueColor);
-    background-color: white;
-    border: 1px solid var(--blueColor);
-    border-radius: 20px;
-    margin: 10px;
-    padding: 15px;
-    width: 100%; 
-}
-.button_control button:hover {
-    cursor: pointer;
+  color: var(--teal);
+  background-color: var(--paper-card);
+  border: 1px solid var(--teal);
+  border-radius: 20px;
+  margin: 10px;
+  padding: 15px;
+  width: 100%;
+  cursor: pointer;
 }
 
 #button_control {
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    align-items: center;
-    padding: 20px;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
 }
-
-
-
-/* for edit modal */
 
 .edit_modal {
-    display: relative;
-    color: white;
+  position: relative;
+  color: var(--ink);
 }
 
-
-
-/* ..........register.....section..... */
 .hide {
-    display: none;
+  display: none;
 }
 
-/* Style for select */
+/* reduced motion */
 
-
-/* Style for the main container */
-.Add_blog_container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    width: 100%;
-    max-width: 500px; 
-    margin: auto; 
-    padding: 20px;   
-    border-radius: 8px; 
+@media (prefers-reduced-motion: reduce) {
+  .record_register {
+    animation: none;
   }
-  
-  /* Responsive adjustments */
-  @media (max-width: 600px) {
-    .Add_blog_container {
-      width: 90%; 
-      padding: 15px;
-    }
-  
-    h2 {
-      font-size: 1.5rem; 
-    }
-  
-    select,
-    input {
-      font-size: 14px;
-    }
-  
-    Button {
-      width: 100%; 
-      font-size: 14px; 
-    }
+}
+
+/* responsive */
+
+@media only screen and (max-width: 600px) {
+  .record_register {
+    padding: 20px 16px 0;
   }
-  
-  
 
+  .record_title {
+    font-size: 1.5rem;
+  }
 
-/* Media Queries for Mobile Responsiveness */
-@media (max-width: 768px) {
-    .header_related h3 {
-        padding: 10px; /* Reduced padding */
-    }
+  .record_card {
+    padding: 20px;
+  }
+}
+
+@media only screen and (max-width: 768px) {
+  .header_related h3 {
+    padding: 10px;
+  }
 }
