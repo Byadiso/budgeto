@@ -1,94 +1,158 @@
 import React, { useEffect, useState } from "react";
-import { checkIfAdmin, getLoggedUser, isAuthenticated, isAuthenticatedDetails } from "../../firebase/Authentication";
 import { useNavigate } from "react-router-dom";
-import NoAccess from "./ErrorComponents/NoAccess";
-import { getCurrentMonthName, totalPlanBugdet, waitToLoad } from "../../Helpers/Helpers";
+import {
+  checkIfAdmin,
+  getLoggedUser,
+  isAuthenticated,
+  isAuthenticatedDetails,
+} from "../../firebase/Authentication";
+import {
+  getCurrentMonthName,
+  totalPlanBugdet,
+  waitToLoad,
+} from "../../Helpers/Helpers";
 import CardBugdeto from "./CardBugdeto";
+import NoAccess from "./ErrorComponents/NoAccess";
 import "../../Style/Dashboard.css";
 import { listTransactions } from "../../firebase/getTransactions";
-import { filterBenefits, filterTransactionsAndCalculateTotal, filterWhatIsNotMine, listAlltransactionWithoutSuper } from "../../firebase/Filters";
+import {
+  filterBenefits,
+  filterTransactionsAndCalculateTotal,
+  filterWhatIsNotMine,
+  listAlltransactionWithoutSuper,
+} from "../../firebase/Filters";
 import { KEYWORDS } from "../../firebase/CONSTANTS";
 import { readPlans } from "../../firebase/Plan";
 
-function Dashboard() {  
+function Dashboard() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [loading, setLoading] = useState(true);
   const [userId, setUserId] = useState(null);
-  const [transactions, setTransactions] = React.useState([]);
+  const [transactions, setTransactions] = useState([]);
   const [budgets, setBudgets] = useState([]);
-  const [loggedUser, setLoggedUser] = useState([]);
-
-  const { totalExpense, totalIncome } = listAlltransactionWithoutSuper(transactions, KEYWORDS); 
-  const { totalBenefits } = filterBenefits(transactions);
-  const { total } = filterTransactionsAndCalculateTotal(transactions, KEYWORDS);
-
-  const {filteredWhatIsNotMine,totalWhatIsNotMine } = filterWhatIsNotMine(transactions)
-
-  let goalAmount= 500
-  let HomeExpenseAmount= 1000 
-
-  let currentMonth= getCurrentMonthName()
-
-
- let isAdmin =  checkIfAdmin(userId)
-
-  const fetchBudgets = async (userId) => {
-    const plans = await readPlans(userId);
-    const plansArray = Object.keys(plans).map(key => ({
-      id: key,
-      ...plans[key],
-    }));
-    setBudgets(plansArray);
-  };
-
-  const totalBudgetPlan= totalPlanBugdet(budgets)
-
-  HomeExpenseAmount = HomeExpenseAmount + totalBudgetPlan
+  const [loggedUser, setLoggedUser] = useState(null);
 
   const navigate = useNavigate();
-  
-  useEffect(() => {      
+
+  // Calculations
+  const { totalExpense, totalIncome } = listAlltransactionWithoutSuper(
+    transactions,
+    KEYWORDS
+  );
+  const { totalBenefits } = filterBenefits(transactions);
+  const { total } = filterTransactionsAndCalculateTotal(
+    transactions,
+    KEYWORDS
+  );
+  const { totalWhatIsNotMine } = filterWhatIsNotMine(transactions);
+
+  const goalAmount = 500;
+  const initialHomeExpenseAmount = 1000;
+  const currentMonth = getCurrentMonthName();
+  const currentYear = new Date().getFullYear();
+  const isAdmin = checkIfAdmin(userId);
+
+  const totalBudgetPlan = totalPlanBugdet(budgets);
+  const homeExpenseAmount = initialHomeExpenseAmount + totalBudgetPlan;
+
+  // Initial Data Fetching
+  useEffect(() => {
     isAuthenticated(setIsLoggedIn);
-    getLoggedUser(setLoggedUser)
+    getLoggedUser(setLoggedUser);
     isAuthenticatedDetails(setIsLoggedIn, setUserId);
     listTransactions(setTransactions);
-    fetchBudgets(userId);
     waitToLoad(setLoading);
-  }, [navigate, isLoggedIn]);
+  }, []);
+
+  // Fetch Budgets when userId is set
+  useEffect(() => {
+    if (userId) {
+      const fetchBudgets = async () => {
+        const plans = await readPlans(userId);
+        if (plans) {
+          const plansArray = Object.keys(plans).map((key) => ({
+            id: key,
+            ...plans[key],
+          }));
+          setBudgets(plansArray);
+        }
+      };
+      fetchBudgets();
+    }
+  }, [userId]);
+
+  if (loading) {
+    return <div className="dashboard_loading">Loading dashboard…</div>;
+  }
+
+  if (!isLoggedIn) {
+    return <NoAccess />;
+  }
 
   return (
-    <div className="main_dashboard">  
+    <div className="main_dashboard">
+      <header className="dashboard_header">
+        <p className="dashboard_eyebrow">
+          {currentMonth} {currentYear}
+        </p>
+        <h1>Dashboard</h1>
+      </header>
 
-      {isLoggedIn && (
-        <>
-        
-        <div className="dashboard_grid">
-          <div className="dashboard_item goal_amount">
-            {isLoggedIn && <CardBugdeto dataExpense={goalAmount} type={"Save Goal till 30th "+ currentMonth +" 2024"}/>}
+      <div className="dashboard_hero dashboard_item goal_amount">
+        <CardBugdeto
+          dataExpense={goalAmount}
+          type={`Save Goal till 30th ${currentMonth} ${currentYear}`}
+        />
+      </div>
+
+      <div className="dashboard_grid">
+        {!isAdmin && (
+          <div className="dashboard_item home_amount">
+            <CardBugdeto
+              dataExpense={homeExpenseAmount}
+              type="Home Groceries Monthly"
+            />
           </div>
-          {!isAdmin &&<div className="dashboard_item home_amount">
-            {isLoggedIn &&  <CardBugdeto dataExpense={HomeExpenseAmount} type="Home grosseries monthly"/>}
-          </div>}
-          {isAdmin &&<div className="dashboard_item">
-            {isLoggedIn && <CardBugdeto dataExpense={totalIncome - totalExpense} type="Bank Account"/>}
-          </div>}
-          {isAdmin &&<div className="dashboard_item">
-            {isLoggedIn && <CardBugdeto dataExpense={totalBenefits} type="Benefit Account"/>}
-          </div>}
-          {isAdmin &&<div className="dashboard_item">
-            {isLoggedIn &&  <CardBugdeto dataExpense={-total} type="Super Account"/>}
-          </div>}
-          <div className="dashboard_item">
-            {isLoggedIn && <CardBugdeto dataExpense={totalBudgetPlan} type="Planned Account monthly"/>}
-          </div>
-          {isAdmin &&<div className="dashboard_item payback">
-            {isLoggedIn && <CardBugdeto dataExpense={-totalWhatIsNotMine} type="What is not mine"/>}
-          </div>}          
+        )}
+
+        {isAdmin && (
+          <>
+            <div className="dashboard_item bank_account">
+              <CardBugdeto
+                dataExpense={totalIncome - totalExpense}
+                type="Bank Account"
+              />
+            </div>
+
+            <div className="dashboard_item benefit_account">
+              <CardBugdeto
+                dataExpense={totalBenefits}
+                type="Benefit Account"
+              />
+            </div>
+
+            <div className="dashboard_item super_account">
+              <CardBugdeto dataExpense={-total} type="Super Account" />
+            </div>
+          </>
+        )}
+
+        <div className="dashboard_item planned_account">
+          <CardBugdeto
+            dataExpense={totalBudgetPlan}
+            type="Planned Account Monthly"
+          />
         </div>
-        </>
-        
-      )}
-      {!isLoggedIn && <NoAccess/>}
+
+        {isAdmin && (
+          <div className="dashboard_item payback">
+            <CardBugdeto
+              dataExpense={-totalWhatIsNotMine}
+              type="What Is Not Mine"
+            />
+          </div>
+        )}
+      </div>
     </div>
   );
 }

@@ -1,134 +1,284 @@
-*, *::before, *::after {
-    box-sizing: border-box;
-}
+@import url("https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@500&display=swap");
 
 :root {
-    --blueColor: #008DDA;
-    --textColorGreyParagraph: #333; /* Assuming the grey color */
+  --ink: #1c2b29;
+  --paper: #edf1e9;
+  --teal-deep: #0b646c;
+  --positive: #2f7a4d;
+  --negative: #b23a2e;
+  --line: #dde3d7;
+  --muted: #5c6e63;
+  --muted-bg: #d9ebdb;
 }
 
-/* all styles  ---------------------------*/
-
-* {
-    box-sizing: border-box;
+/* defensive reset — scoped to this page only, so nothing leaks in from
+   global styles (this is what was centering text and blacking out the footer) */
+.main_Landing,
+.main_Landing * {
+  box-sizing: border-box;
 }
 
-*:focus {
-    outline: none;
+.main_Landing h1,
+.main_Landing h2,
+.main_Landing p,
+.main_Landing span,
+.main_Landing div,
+.main_Landing a {
+  text-align: left;
+  margin: 0;
 }
 
-/* body styles  */
-body {
-    font-family: 'Roboto', sans-serif;
-    background-color: var(--blueColor);
-    background-position: center;
-    background-repeat: no-repeat;
-    background-size: cover;
-    margin: 0;
-    padding: 0; /* Added to prevent unwanted horizontal scrolling */
+*:focus-visible {
+  outline: 2px solid var(--teal-deep);
+  outline-offset: 2px;
 }
-
 
 .main_Landing {
-    display: flex;
-    justify-content: center; 
-    align-items: center;    
-    flex-direction: row; 
-    height: 100vh;        
-    background-color: var(--blueColor); 
-   
+  min-height: 100vh;
+  background: var(--paper);
+  font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+    sans-serif;
+  color: var(--ink);
 }
 
+/* top bar */
 
-/* Mobile responsiveness */
-@media only screen and (max-width: 720px) {
-    .ngana_logo {
-        margin-right: auto; 
-        margin-left: auto;  
-        font-size: 24px; 
-        text-align: center;
-    }
-
-    .welcome_text {
-        color: var(--blueColor);
-        font-size: 1.2rem; 
-        text-align: center; 
-        padding: 10px;
-    }
-
-    .hero_section_header {
-        display: flex;
-        justify-content: center;
-        flex-direction: column;
-        align-items: center; 
-    }
-
-    .hero_section_header div .fa {
-        padding: 5px;
-    }
-
-    .image_landing {
-        display: none;
-    }
-
-    .hero_section {
-        font-size: 0.8rem;
-        padding: 15px; 
-        text-align: center; 
-    }
-
-    
-   
-
-   
-
-    /* remove link style on a tag */
-    a, button {
-        all: unset;
-    }
+.landing_topbar {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 2.5rem 2rem 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }
 
-/* For iPads and tablets */
-@media only screen and (max-width: 920px) {
-    body {
-        min-width: 360px;
-    }
-
-    .ngana_logo {
-        margin-right: 50px;
-        margin-left: 50px;
-        font-size: 30px;
-    }
-
-    .hero_section {
-        font-size: 0.9rem;
-        padding: 20px; /* More padding for larger tablets */
-        text-align: center;
-    }
-
-   
-
-    .dropdown {
-        margin-bottom: 10px;
-    }
-
-    .main_who_items img {
-        width: 90%;
-        max-width: 400px;
-    }
-    
+.landing_mark {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  text-decoration: none;
+  color: var(--ink);
+  font-weight: 600;
+  font-size: 0.95rem;
 }
 
-/* For dark mode */
-@media (prefers-color-scheme: dark) {
-    body {       
-        color: white;
-    }
+.landing_mark svg {
+  font-size: 1.1rem;
+  color: var(--teal-deep);
 }
 
-@media (prefers-color-scheme: light) {
-    body {
-        background: #ddd;
-        color: black;
-    }
+.landing_topbar_cta {
+  text-decoration: none;
+  color: var(--ink);
+  font-size: 0.9rem;
+  font-weight: 500;
+  padding: 0.4rem 0.9rem;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: var(--paper);
+  transition: border-color 0.15s ease, color 0.15s ease;
+}
+
+.landing_topbar_cta:hover {
+  border-color: var(--teal-deep);
+  color: var(--teal-deep);
+}
+
+/* hero */
+
+.landing_hero {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 6rem 2rem 6rem;
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 4rem;
+  align-items: center;
+  text-align: left;
+}
+
+.landing_hero_copy {
+  text-align: left;
+}
+
+.landing_hero_copy h1 {
+  margin: 0 0 1.1rem;
+  font-family: "Fraunces", Georgia, serif;
+  font-weight: 500;
+  font-size: 2.9rem;
+  line-height: 1.15;
+  letter-spacing: -0.01em;
+  max-width: 13ch;
+  text-align: left;
+}
+
+.landing_hero_sub {
+  margin: 0 0 2rem;
+  font-size: 1.05rem;
+  line-height: 1.6;
+  color: var(--muted);
+  max-width: 34ch;
+  text-align: left;
+}
+
+.landing_primary_cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: var(--paper);
+  background: var(--ink);
+  text-decoration: none;
+  font-size: 0.95rem;
+  font-weight: 500;
+  padding: 0.75rem 1.4rem;
+  border-radius: 8px;
+  transition: background 0.15s ease, transform 0.1s ease;
+}
+
+.landing_primary_cta:hover {
+  background: var(--teal-deep);
+}
+
+.landing_primary_cta:active {
+  transform: scale(0.98);
+}
+
+.landing_hero_note {
+  display: block;
+  margin-top: 0.9rem;
+  font-size: 0.8rem;
+  color: var(--muted);
+  text-align: left;
+}
+
+/* recent activity */
+
+.landing_recent {
+  display: flex;
+  flex-direction: column;
+  gap: 0.9rem;
+  min-width: 240px;
+  padding: 1.5rem;
+  background: #fff;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  box-shadow: 0 1px 2px rgba(28, 43, 41, 0.04);
+  text-align: left;
+}
+
+.landing_recent_label {
+  font-size: 0.72rem;
+  color: var(--muted);
+  margin-bottom: 0.3rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.landing_recent_row {
+  display: grid;
+  grid-template-columns: 3.2rem 1fr auto;
+  gap: 1rem;
+  font-family: "IBM Plex Mono", monospace;
+  font-size: 0.8rem;
+}
+
+.landing_recent_date {
+  color: var(--muted);
+}
+
+.landing_recent_entry {
+  color: var(--ink);
+}
+
+.landing_recent_amount {
+  text-align: right;
+  white-space: nowrap;
+}
+
+.landing_up {
+  color: var(--positive);
+}
+
+.landing_down {
+  color: var(--negative);
+}
+
+/* features — intentional 3-column grid */
+
+.landing_features {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 4rem 2rem 5rem;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2.5rem;
+  border-top: 1px solid var(--line);
+}
+
+.landing_feature {
+  padding-top: 1.75rem;
+  border-top: 2px solid var(--teal-deep);
+  text-align: left;
+}
+
+.landing_feature h2 {
+  margin: 0 0 0.6rem;
+  font-family: "Fraunces", Georgia, serif;
+  font-weight: 500;
+  font-size: 1.15rem;
+  text-align: left;
+}
+
+.landing_feature p {
+  margin: 0;
+  font-size: 0.92rem;
+  line-height: 1.6;
+  color: var(--muted);
+  text-align: left;
+}
+
+/* footer */
+
+.landing_footer {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 2rem 2rem 3rem;
+  font-size: 0.8rem;
+  color: var(--muted);
+  background: var(--paper);
+  border-top: 1px solid var(--line);
+  text-align: left;
+}
+
+/* responsive */
+
+@media (max-width: 640px) {
+  .landing_hero {
+    grid-template-columns: 1fr;
+    padding: 3.5rem 1.5rem 3.5rem;
+    gap: 2.5rem;
+  }
+
+  .landing_recent {
+    width: 100%;
+    min-width: 0;
+  }
+
+  .landing_hero_copy h1 {
+    font-size: 2.2rem;
+    max-width: none;
+  }
+
+  .landing_topbar {
+    padding: 1.75rem 1.5rem 0;
+  }
+
+  .landing_features {
+    grid-template-columns: 1fr;
+    padding: 3rem 1.5rem 3rem;
+  }
+
+  .landing_footer {
+    padding: 1.5rem 1.5rem 2.5rem;
+  }
 }

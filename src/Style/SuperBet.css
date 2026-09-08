@@ -1,0 +1,189 @@
+@import url("https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@500&display=swap");
+
+:root {
+  --ink: #1c2b29;
+  --paper: #edf1e9;
+  --paper-card: #fbfaf4;
+  --teal: #0e7c86;
+  --teal-deep: #0b646c;
+  --positive: #2f7a4d;
+  --negative: #b23a2e;
+  --line: #cfd8cb;
+  --muted: #5b665f;
+}
+
+/* Fill the actual viewport — prevents the blank-white gap that shows
+   whenever a parent (html/body/#root or a layout wrapper) isn't set
+   to the paper background or isn't spanning full width. */
+html,
+body,
+#root {
+  margin: 0;
+  padding: 0;
+  min-height: 100%;
+  background: var(--paper);
+}
+
+*:focus-visible {
+  outline: 2px solid var(--teal);
+  outline-offset: 2px;
+}
+
+.superbet_page {
+  width: 100%;
+  min-height: 100vh;
+  background: var(--paper);
+  font-family: "Inter", -apple-system, BlinkMacSystemFont, sans-serif;
+  color: var(--ink);
+  padding-bottom: 60px;
+}
+
+.superbet_topbar {
+  padding: 20px 24px 0;
+}
+
+.superbet_back {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  text-decoration: none;
+  color: var(--muted);
+  font-size: 0.9rem;
+  font-weight: 500;
+  transition: color 0.15s ease;
+}
+
+.superbet_back:hover {
+  color: var(--ink);
+}
+
+.superbet_register {
+  max-width: 640px;
+  margin: 0 auto;
+  padding: 24px 24px 0;
+  animation: superbet_fade_in 0.4s ease both;
+}
+
+@keyframes superbet_fade_in {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.superbet_header {
+  margin-bottom: 20px;
+}
+
+.superbet_eyebrow {
+  margin: 0 0 4px;
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: var(--teal-deep);
+  letter-spacing: 0.02em;
+}
+
+.superbet_title {
+  margin: 0;
+  font-family: "Fraunces", Georgia, serif;
+  font-weight: 600;
+  font-size: 2.1rem;
+  letter-spacing: -0.01em;
+  color: var(--ink) !important;
+}
+
+/* summary panel */
+
+.superbet_summary {
+  background: var(--paper-card);
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  padding: 20px 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  margin-bottom: 24px;
+}
+
+.superbet_summary_label {
+  font-size: 0.8rem;
+  color: var(--muted) !important;
+  font-weight: 500;
+}
+
+.superbet_summary_amount {
+  margin: 0;
+  font-family: "IBM Plex Mono", monospace;
+  font-variant-numeric: tabular-nums;
+  font-size: 2rem;
+  font-weight: 500;
+}
+
+/* Flatten CardBugdeto's own internal card chrome (background, border,
+   its own "Total On" label, padding) so it doesn't nest a second card
+   inside .superbet_summary. This only applies inside this wrapper, so
+   CardBugdeto keeps its normal look everywhere else it's used.
+   TODO: once CardBugdeto is refactored to accept a "bare" / "compact"
+   prop, remove this block and pass that prop instead — this is a patch,
+   not the real fix. */
+.superbet_summary_amount * {
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  width: auto !important;
+  border-radius: 0 !important;
+}
+
+.superbet_summary_amount {
+  display: flex;
+  align-items: baseline;
+}
+
+/* table wrapper */
+
+.superbet_table {
+  border-top: 1px solid var(--line);
+}
+
+/* empty / loading state */
+
+.superbet_empty {
+  padding: 40px 20px;
+  text-align: center;
+  border-top: 1px solid var(--line);
+  color: var(--muted);
+}
+
+.superbet_empty p {
+  margin: 0 0 4px;
+}
+
+.superbet_empty_sub {
+  font-size: 0.9rem;
+}
+
+/* reduced motion */
+
+@media (prefers-reduced-motion: reduce) {
+  .superbet_register {
+    animation: none;
+  }
+}
+
+/* responsive */
+
+@media only screen and (max-width: 720px) {
+  .superbet_register {
+    padding: 20px 16px 0;
+  }
+
+  .superbet_summary_amount {
+    font-size: 1.6rem;
+  }
+}

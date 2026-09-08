@@ -1,0 +1,142 @@
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+*:focus-visible {
+  outline: 2px solid var(--teal);
+  outline-offset: 2px;
+}
+
+:root {
+  /* Budgeto ledger palette — shared with Planning.css / Dashboard.css / Archive.css */
+  --ink: #1c2b29;
+  --paper: #edf1e9;
+  --paper-card: #fbfaf4;
+  --teal: #0e7c86;
+  --teal-deep: #0b646c;
+  --positive: #2f7a4d;
+  --negative: #b23a2e;
+  --line: #cfd8cb;
+  --muted: #212522;
+}
+
+@import url("https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@500&display=swap");
+
+.reports_page {
+  min-height: 100vh;
+  background: var(--paper);
+  font-family: "Inter", -apple-system, BlinkMacSystemFont, sans-serif;
+  color: var(--ink) !important;
+  padding-bottom: 60px;
+}
+
+.reports_topbar {
+  padding: 20px 24px 0;
+}
+
+.reports_back {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  text-decoration: none;
+  color: var(--muted) !important;
+  font-size: 0.9rem;
+  font-weight: 500;
+  transition: color 0.15s ease;
+}
+
+.reports_back:hover {
+  color: var(--ink) !important;
+}
+
+.reports_register {
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 24px 24px 0;
+  animation: reports_fade_in 0.4s ease both;
+}
+
+@keyframes reports_fade_in {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.reports_header {
+  margin-bottom: 20px;
+}
+
+.reports_eyebrow {
+  margin: 0 0 4px;
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: var(--teal-deep) !important;
+}
+
+.reports_title {
+  margin: 0;
+  font-family: "Fraunces", Georgia, serif;
+  font-weight: 600;
+  font-size: 2.1rem;
+  letter-spacing: -0.01em;
+  color: var(--ink) !important;
+}
+
+/* benefits summary panel — same hero device as the Dashboard's goal card */
+
+.reports_hero {
+  background: var(--ink);
+  border-radius: 12px;
+  padding: 1.25rem 1.5rem;
+  margin-bottom: 20px;
+  max-width: 320px;
+}
+
+.reports_hero,
+.reports_hero * {
+  /* color: var(--paper) !important; */
+  color:#0b646c
+}
+
+/* table panel */
+
+.reports_table_panel {
+  background: var(--paper-card);
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  padding: 8px;
+  overflow-x: auto;
+}
+
+/* reduced motion */
+
+@media (prefers-reduced-motion: reduce) {
+  .reports_register {
+    animation: none;
+  }
+}
+
+/* responsive */
+
+@media only screen and (max-width: 720px) {
+  .reports_register {
+    padding: 20px 16px 0;
+  }
+
+  .reports_hero {
+    max-width: none;
+  }
+}
+
+@media only screen and (max-width: 920px) {
+  body {
+    min-width: 360px;
+  }
+}

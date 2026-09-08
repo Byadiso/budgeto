@@ -7,6 +7,9 @@ import { Link } from "react-router-dom";
 import "../../Style/Planning.css";
 
 import AddIcon from "@mui/icons-material/Add";
+import EditOutlinedIcon from "@mui/icons-material/EditOutlined";
+import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
+import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import BudgetModal from "../Modals/BudgetModal";
 import {
   createPlan,
@@ -22,7 +25,6 @@ import {
 } from "../../Helpers/Helpers";
 import ArchivePlanButton from "./ArchivePlans";
 import NoAccess from "./ErrorComponents/NoAccess";
-import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 
 function Planning() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -93,106 +95,109 @@ function Planning() {
   const totalAmount = totalPlanBugdet(budgets);
 
   return (
-    <div className="main_dashboard">
-      <div
-        style={{
-          paddingTop: "5px",
-          margin: "5px",
-          display: "flex",
-          justifyContent: "flex-start",
-          alignItems: "center",
-        }}
-      >
-        <Link
-          to="/Dashboard"
-          style={{
-            display: "flex",
-            alignItems: "center",
-            textDecoration: "none",
-          }}
-        >
-          <ArrowBackIcon style={{ marginRight: "5px" }} /> Go back
+    <div className="ledger_page">
+      <div className="ledger_topbar">
+        <Link to="/Dashboard" className="ledger_back">
+          <ArrowBackIcon fontSize="small" />
+          Go back
         </Link>
       </div>
 
       {isLoggedIn ? (
-        <>
-          <div style={{ padding: "35px", margin: "35px", color: "black" }}>
-            <h4>
-              Welcome to your Planning page for{" "}
-              <span style={{ color: "green" }}> {currentMonth}</span>
-            </h4>
+        <div className="ledger_register">
+          <header className="ledger_header">
+            <p className="ledger_month">{currentMonth}</p>
+            <h1 className="ledger_title">Planning</h1>
+          </header>
 
-            <div className="total-amount">
-              <h2 style={getTotalStyle(totalAmount)}>
-                Total: {totalAmount} PLN
-              </h2>
-            </div>
-
-            <div className="main_container_planner">
-              <div
-                style={{
-                  display: "flex",
-                  flexDirection: "row",
-                  padding: "10px",
-                  alignItems: "center",
-                  color: "white",
-                  backgroundColor: "#008DDA",
-                  justifyContent: "center",
-                }}
-              >
-                <p onClick={handleAddNewPlan} className="Add_plan">
-                  Start Planning
-                </p>
-                <AddIcon onClick={handleAddNewPlan} className="Add_plan" />
-              </div>
-
-              <div className="budget-cards-container">
-                {budgets.length > 0 ? (
-                  budgets.map((budget, index) => (
-                    <div
-                      className="budget-card"
-                      key={budget.id}
-                      style={getCardStyle(budget.category)}
-                    >
-                      <h5>{budget.name}</h5>
-                      <p>Amount: {budget.amount}PLN</p>
-                      <p>Category: {budget.category}</p>
-                      <button
-                        onClick={() => handleEditBudget(index)}
-                        className="btn-edit"
-                      >
-                        Edit
-                      </button>
-                      <button
-                        onClick={() => handleRemoveBudget(index)}
-                        className="btn-remove"
-                      >
-                        Remove
-                      </button>
-                    </div>
-                  ))
-                ) : (
-                  <p>No plans yet. Start by adding a budget.</p>
-                )}
-              </div>
-              <div>
-                <h1>Archive Plan for the Month</h1>
-                <ArchivePlanButton currentTotalAmount={totalAmount} />
-              </div>
-            </div>
+          <div className="ledger_balance">
+            <span className="ledger_balance_label">Total planned</span>
+            <h2 className="ledger_balance_amount" style={getTotalStyle(totalAmount)}>
+              {totalAmount} <span className="ledger_currency">PLN</span>
+            </h2>
           </div>
 
-          {isModalOpen && (
-            <BudgetModal
-              closeModal={() => setIsModalOpen(false)}
-              addOrEditBudget={handleAddOrEditBudget}
-              currentBudget={currentBudget}
-            />
-          )}
-        </>
+          <button
+            type="button"
+            onClick={handleAddNewPlan}
+            className="ledger_add_row"
+          >
+            <span className="ledger_add_icon">
+              <AddIcon fontSize="small" />
+            </span>
+            Add a new budget
+          </button>
+
+          <section className="ledger_entries" aria-label="Budget entries">
+            {budgets.length > 0 ? (
+              budgets.map((budget, index) => (
+                <article className="ledger_entry" key={budget.id}>
+                  <span
+                    className="ledger_entry_stripe"
+                    style={getCardStyle(budget.category)}
+                  />
+                  <div className="ledger_entry_main">
+                    <h3 className="ledger_entry_name">{budget.name}</h3>
+                    <span
+                      className="ledger_entry_category"
+                      style={getCardStyle(budget.category)}
+                    >
+                      {budget.category}
+                    </span>
+                  </div>
+
+                  <span className="ledger_entry_amount">
+                    {budget.amount} <span className="ledger_currency">PLN</span>
+                  </span>
+
+                  <div className="ledger_entry_actions">
+                    <button
+                      type="button"
+                      onClick={() => handleEditBudget(index)}
+                      className="ledger_icon_btn"
+                      aria-label={`Edit ${budget.name}`}
+                    >
+                      <EditOutlinedIcon fontSize="small" />
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => handleRemoveBudget(index)}
+                      className="ledger_icon_btn ledger_icon_btn--danger"
+                      aria-label={`Remove ${budget.name}`}
+                    >
+                      <DeleteOutlineIcon fontSize="small" />
+                    </button>
+                  </div>
+                </article>
+              ))
+            ) : (
+              <div className="ledger_empty">
+                <p>No budgets yet.</p>
+                <p className="ledger_empty_sub">
+                  Add your first entry to start planning {currentMonth}.
+                </p>
+              </div>
+            )}
+          </section>
+
+          <section className="ledger_archive">
+            <div className="ledger_archive_text">
+              <h4>Close the books</h4>
+              <p>Archive this month's plan to start fresh next month.</p>
+            </div>
+            <ArchivePlanButton currentTotalAmount={totalAmount} />
+          </section>
+        </div>
       ) : (
         <NoAccess />
+      )}
+
+      {isModalOpen && (
+        <BudgetModal
+          closeModal={() => setIsModalOpen(false)}
+          addOrEditBudget={handleAddOrEditBudget}
+          currentBudget={currentBudget}
+        />
       )}
     </div>
   );

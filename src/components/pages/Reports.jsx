@@ -5,24 +5,20 @@ import NoAccess from "./ErrorComponents/NoAccess";
 import { waitToLoad } from "../../Helpers/Helpers";
 import TableData from "./TableData";
 import CardBugdeto from "./CardBugdeto";
-import "../../Style/Dashboard.css";
+import "../../Style/Reports.css";
 import { listTransactions } from "../../firebase/getTransactions";
-import { filterBenefits} from "../../firebase/Filters";
-import ArrowBackIcon from '@mui/icons-material/ArrowBack';
-
+import { filterBenefits } from "../../firebase/Filters";
+import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 
 function Reports() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [loading, setLoading] = useState(true);
   const [transactions, setTransactions] = React.useState([]);
-  
-  const { filteredBenefits, totalBenefits } = filterBenefits(
-    transactions
-  );
 
+  const { filteredBenefits, totalBenefits } = filterBenefits(transactions);
 
   const list = (setDataList) => {
-    return  listTransactions(setDataList);;
+    return listTransactions(setDataList);
   };
 
   useEffect(() => {
@@ -31,45 +27,33 @@ function Reports() {
   }, [isLoggedIn]);
 
   return (
-    <div className="main_dashboard">
-      <div
-        style={{
-          paddingTop: "5px",
-          paddingBottom: "140px",
-          margin: "5px",
-          display: "flex",
-          justifyContent: "flex-start",
-          alignItems: "center",
-        }}
-      >
-        <Link
-          to="/Dashboard"
-          style={{
-            display: "flex",
-            alignItems: "center",
-            textDecoration: "none",
-          }}
-        >
-          <ArrowBackIcon style={{ marginRight: "5px" }} /> Go back
+    <div className="reports_page">
+      <div className="reports_topbar">
+        <Link to="/Dashboard" className="reports_back">
+          <ArrowBackIcon fontSize="small" />
+          Go back
         </Link>
       </div>
-     
-      <div
-        style={{
-          display: "flex",
-          alignItems: "center",
-          width: "100%",
-          padding: "5px",
-          
-        }}
-      >
-        <div style={{  width: "100%"}}>
-          {isLoggedIn ? (
-            <TableData fetchDataFunction={list} />
-          ) : (
-            !loading && <NoAccess />
-          )}
-        </div>
+
+      <div className="reports_register">
+        <header className="reports_header">
+          <p className="reports_eyebrow">Reports</p>
+          <h1 className="reports_title">Transactions</h1>
+        </header>
+
+        {isLoggedIn ? (
+          <>
+            <div className="reports_hero">
+              <CardBugdeto dataExpense={totalBenefits} type="Total Benefits" />
+            </div>
+
+            <div className="reports_table_panel">
+              <TableData fetchDataFunction={list} />
+            </div>
+          </>
+        ) : (
+          !loading && <NoAccess />
+        )}
       </div>
     </div>
   );

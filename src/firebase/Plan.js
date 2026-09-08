@@ -46,6 +46,7 @@ export const readPlans = async (userId) => {
     }
   } catch (error) {
     console.error("Error fetching plans:", error.message);
+    console.log(userId)
     return {}; // Return an empty object in case of error
   }
 };

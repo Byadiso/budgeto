@@ -5,6 +5,8 @@ import { Link } from "react-router-dom";
 import "../../Style/Archive.css";
 import NoAccess from "./ErrorComponents/NoAccess";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
+import EditOutlinedIcon from "@mui/icons-material/EditOutlined";
+import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
 
 // Archived Component
 const ArchiveCard = () => {
@@ -29,65 +31,73 @@ const ArchiveCard = () => {
     setArchives(archiveArray);
   };
 
+  // Most recently archived month first
+  const sortedArchives = [...archives].reverse();
+
   return (
-    <div className="archive-container">
-      <div
-        style={{
-          paddingTop: "5px",
-          paddingBottom: "20px",
-          margin: "5px",
-          display: "flex",
-          justifyContent: "flex-start",
-          alignItems: "center",
-          
-        }}
-      >
-        <Link
-          to="/Dashboard"
-          style={{
-            display: "flex",
-            alignItems: "center",
-            textDecoration: "none",
-            color: "inherit",
-          }}
-        >
-          <ArrowBackIcon style={{ marginRight: "5px" }} /> Go back
+    <div className="archive_page">
+      <div className="archive_topbar">
+        <Link to="/Dashboard" className="archive_back">
+          <ArrowBackIcon fontSize="small" />
+          Go back
         </Link>
       </div>
+
       {isLoggedIn ? (
-        <div
-          className="bugdet_summary"
-          style={{
-            display: "flex",
-            flexDirection: "row",
-            alignItems: "center",
-            margin: "10",
-          }} /* Updated */
-        >
-          {archives ? (
-            isLoggedIn &&
-            archives
-              .sort((a, b) => -1)
-              .map((archive, index) => (
-                <div key={index} className="archive-card">
-                  <h3>Total amount for the month</h3>
-                  <div className="card">
-                    <h5>{archive.month}</h5>
-                    <p >Amount: <span style={{color:archive.amount < 0 ? "#fa1717":"#56a256"}}>{archive.amount}PLN </span></p>
-                    <div className="Archive_control">
-                      <input type="button" value="edit" className="btn-edit" />
-                      <input
-                        type="button"
-                        value="delete"
-                        className="btn-remove"
-                      />
-                    </div>
+        <div className="archive_register">
+          <header className="archive_header">
+            <p className="archive_eyebrow">Archive</p>
+            <h1 className="archive_title">Archived plans</h1>
+          </header>
+
+          {sortedArchives.length > 0 ? (
+            <div className="archive_grid">
+              {sortedArchives.map((archive, index) => (
+                <div key={archive.id ?? index} className="archive_tile">
+                  <span className="archive_stamp">Archived</span>
+
+                  <h3 className="archive_month">{archive.month}</h3>
+
+                  <p className="archive_amount_row">
+                    <span className="archive_amount_label">Total amount</span>
+                    <span
+                      className="archive_amount"
+                      style={{
+                        color:
+                          archive.amount < 0
+                            ? "var(--negative)"
+                            : "var(--positive)",
+                      }}
+                    >
+                      {archive.amount} <span className="archive_currency">PLN</span>
+                    </span>
+                  </p>
+
+                  <div className="archive_controls">
+                    <button
+                      type="button"
+                      className="archive_icon_btn"
+                      aria-label={`Edit archived plan for ${archive.month}`}
+                    >
+                      <EditOutlinedIcon fontSize="small" />
+                    </button>
+                    <button
+                      type="button"
+                      className="archive_icon_btn archive_icon_btn--danger"
+                      aria-label={`Delete archived plan for ${archive.month}`}
+                    >
+                      <DeleteOutlineIcon fontSize="small" />
+                    </button>
                   </div>
                 </div>
-              ))
+              ))}
+            </div>
           ) : (
-            <div className="archive-card">
-              <h3>No plan archived for this user</h3>
+            <div className="archive_empty">
+              <p>No plans archived yet.</p>
+              <p className="archive_empty_sub">
+                Close a month on the Planning page to file it here.
+              </p>
             </div>
           )}
         </div>

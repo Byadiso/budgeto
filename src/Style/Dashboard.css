@@ -1,143 +1,259 @@
-*, *::before, *::after {
-    box-sizing: border-box;
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+*:focus-visible {
+  outline: 2px solid var(--teal);
+  outline-offset: 2px;
 }
 
 :root {
-    --blueColor: #008DDA;
-    --blueActiveColor: #29b4e2;
-    --redColor: #fa1717;  
-    --greyColor: #4b4a4a;
-    --backgroundGrey: rgba(244, 244, 244, 0.918);
+  /* Budgeto ledger palette — shared with Planning.css */
+  --ink: #1c2b29;
+  --paper: #edf1e9;
+  --paper-card: #fbfaf4;
+  --teal: #0e7c86;
+  --teal-deep: #0b646c;
+  --positive: #2f7a4d;
+  --negative: #b23a2e;
+  --amber: #b8863b;
+  --slate: #556070;
+  --line: #cfd8cb;
+  --muted: #5b665f;
 }
 
-/* Base Styles */
+@import url("https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@500&display=swap");
 
-body {
-    font-family: 'Roboto', sans-serif;
-    background-color: var(--backgroundGrey);
-    background-position: center;
-    background-repeat: no-repeat;
-    background-size: cover;
-    margin: 0;
-    padding: 0; /* Ensure no unwanted overflow */
-}
-
-/* Dashboard Main Container */
 .main_dashboard {
-    background-color: var(--backgroundGrey);
-    padding: 10px;
+  min-height: 100vh;
+  background: var(--paper);
+  font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+    sans-serif;
+  color: var(--ink) !important;
+  padding: 2rem;
+  max-width: 900px;
+  margin: 0 auto;
+  animation: dashboard_fade_in 0.4s ease both;
 }
 
-/* Summary Section */
-.bugdet_summary {
-    display: flex;
-    flex-direction: row;    
-    align-items: center;
-    justify-content: center;
-    width: 100%;
-    flex-wrap: wrap; 
+@keyframes dashboard_fade_in {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
-/* Summary Item Styles */
-.bugdet_summary_item {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background-color: white;
-    margin: 10px; 
-    padding: 15px; 
-    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
-    border-radius: 8px;
-    min-width: 150px; 
-    max-width: 300px; 
+/* header */
+
+.dashboard_header {
+  margin-bottom: 1.75rem;
 }
 
-/* Dashboard Grid Layout */
+.dashboard_eyebrow {
+  margin: 0 0 4px;
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: var(--teal-deep) !important;
+}
+
+.dashboard_header h1 {
+  margin: 0;
+  font-family: "Fraunces", Georgia, serif;
+  font-weight: 600;
+  font-size: 2.1rem;
+  letter-spacing: -0.01em;
+  color: var(--ink) !important;
+}
+
+.dashboard_subtitle {
+  font-size: 0.95rem;
+  color: var(--muted) !important;
+  margin: 0;
+}
+
+/* hero goal panel */
+
+.dashboard_hero {
+  background: var(--ink);
+  border-radius: 12px;
+  padding: 1.5rem 1.75rem;
+  margin-bottom: 1.5rem;
+  box-shadow: none;
+}
+
+.dashboard_hero,
+.dashboard_hero * {
+  color: var(--paper) !important;
+}
+
+.dashboard_hero:hover {
+  transform: none;
+  box-shadow: none;
+}
+
+/* statement grid */
+
 .dashboard_grid {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr); 
-    gap: 20px; 
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 1rem;
 }
 
 .dashboard_item {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 20px;
-    background-color: #f9f9f9;
-    border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    text-align: center; /* Centered text for smaller screens */
+  position: relative;
+  background: var(--paper-card);
+  border-radius: 10px;
+  padding: 1.1rem 1.25rem 1.1rem 1.5rem;
+  border: 1px solid var(--line);
+  box-shadow: none;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+  overflow: hidden;
 }
 
-/* Color Backgrounds */
-.goal_amount {
-    background-color: rgba(0, 128, 0, 0.411);
+.dashboard_item::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 10px;
+  bottom: 10px;
+  width: 4px;
+  border-radius: 2px;
+  background: var(--teal);
 }
 
-.home_amount {
-    background-color: rgba(255, 0, 0, 0.263);
+.dashboard_item:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px -8px rgba(28, 43, 41, 0.25);
 }
 
-.payback {
-    background-color: rgb(255, 0, 0);
+.dashboard_item,
+.dashboard_item * {
+  color: var(--ink) !important;
 }
 
-/* Mobile Responsiveness */
-@media only screen and (max-width: 720px) {
-    body {
-        padding: 0 10px; /* Add padding to prevent overflow */
-    }
+/* category accents — same stripe language as the Planning register rows */
 
-    .bugdet_summary {
-        flex-direction: column; 
-        align-items: stretch; 
-    }
-
-    .dashboard_grid {
-        grid-template-columns: 1fr; 
-        gap: 15px; 
-        padding-right: 0px;
-    }
-
-    .dashboard_item {
-        padding: 15px; /* Reduced padding for smaller screens */
-        margin: 10px 0; /* Add vertical spacing between items */
-        width: 100%; /* Ensure items take full width */
-    }
+.home_amount::before,
+.planned_account::before {
+  background: var(--amber);
 }
 
-/* Tablets and Larger Mobile Devices */
-@media only screen and (min-width: 720px) and (max-width: 920px) {
-    body {
-        padding: 0 15px; /* Add padding for better spacing */
-    }
-
-    .bugdet_summary {
-        flex-wrap: wrap; /* Ensure proper wrapping on medium screens */
-    }
-
-    .dashboard_grid {
-        grid-template-columns: repeat(2, 1fr); /* Two columns for larger mobile */
-    }
-
-    .dashboard_item {
-        padding: 20px; /* Maintain padding for larger mobile screens */
-    }
+.bank_account::before {
+  background: var(--ink);
 }
 
-/* Dark Mode */
-@media (prefers-color-scheme: dark) {
-    body {
-        background: var(--blueColor);
-        color: white;
-    }
+.benefit_account::before {
+  background: var(--positive);
 }
 
-/* Light Mode */
-@media (prefers-color-scheme: light) {
-    body {
-        background: #ddd;
-        color: black;
-    }
+.super_account::before {
+  background: var(--slate);
+}
+
+.payback::before {
+  background: var(--negative);
+}
+
+/* loading state */
+
+.dashboard_loading {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 50vh;
+  background: var(--paper);
+  font-family: "Inter", sans-serif;
+  font-size: 1.05rem;
+  color: var(--muted) !important;
+}
+
+/* reduced motion */
+
+@media (prefers-reduced-motion: reduce) {
+  .main_dashboard {
+    animation: none;
+  }
+  .dashboard_item:hover {
+    transform: none;
+  }
+}
+
+/* responsive */
+
+@media (max-width: 640px) {
+  .main_dashboard {
+    padding: 1.25rem 1rem;
+  }
+
+  .dashboard_grid {
+    grid-template-columns: 1fr;
+  }
+
+  .dashboard_hero {
+    padding: 1.25rem;
+  }
+}
+
+
+
+
+.superbet_page {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 2rem;
+}
+
+.superbet_back {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  text-decoration: none;
+  color: var(--muted, #5c6e63);
+  font-size: 0.9rem;
+  margin-bottom: 1.5rem;
+  transition: color 0.15s ease;
+}
+
+.superbet_back:hover {
+  color: var(--ink, #1c2b29);
+}
+
+.superbet_header {
+  margin-bottom: 1.5rem;
+}
+
+.superbet_header h1 {
+  margin: 0 0 0.3rem;
+  font-family: "Fraunces", Georgia, serif;
+  font-weight: 500;
+  font-size: 1.8rem;
+  color: var(--ink, #1c2b29);
+}
+
+.superbet_subhead {
+  margin: 0;
+  font-size: 0.9rem;
+  color: var(--muted, #5c6e63);
+}
+
+.superbet_summary {
+  margin-bottom: 2rem;
+}
+
+.superbet_table {
+  width: 100%;
+}
+
+.superbet_loading,
+.superbet_empty {
+  padding: 2.5rem 0;
+  text-align: center;
+  color: var(--muted, #5c6e63);
+  font-size: 0.95rem;
 }
