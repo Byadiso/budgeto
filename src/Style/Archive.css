@@ -1,0 +1,178 @@
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+:root {
+  --blueColor: #008DDA;
+  --blueActiveColor: #29b4e2;
+  --redColor: #fa1717;  
+  --greyColor: #4b4a4a;
+  --greenColor: #56a256;
+  --backgroundGrey: rgba(244, 244, 244, 0.918);
+}
+
+/* Base Styles */
+* {
+  box-sizing: border-box;
+}
+
+*:focus {
+  outline: none;
+}
+
+/* Archive Card Styles */
+.archive-card {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: space-between;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  padding: 10px;
+  margin: 20px;
+  background-color: #fff;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.archive-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+}
+
+.archive-card h5 {
+  font-size: 1.4rem;
+  color: #939090;
+  margin-bottom: 5px;
+}
+
+.archive-card p {
+  margin: 0;
+  font-size: 1.1rem;
+  color: #d8d6d6;
+}
+
+.archive-card h3 {
+  font-size: 1.1rem;
+  color: #d8d6d6;
+}
+
+/* Card Container (For Nested Elements) */
+.card {
+  display: flex;
+  flex-direction: column;
+  gap: 5px; 
+}
+
+.Archive_control{
+display: flex;
+flex-direction:row ;
+}
+
+.Archive_control input{
+  margin: 5px;
+}
+/* Global Body Styles */
+body {
+  font-family: 'Roboto', sans-serif;
+  background-color: #f4f4f9;
+  color: #333;
+  margin: 0;
+  padding: 10px;
+}
+
+
+/* Link Styling */
+a {
+  text-decoration: none;
+  color: #053568;
+  transition: color 0.2s ease;
+}
+
+a:hover {
+  color: #0056b3;
+}
+
+/* Mobile Responsiveness (Below 720px) */
+@media only screen and (max-width: 720px) {
+
+  .archive-card {
+      padding: 15px;
+      margin: 10px;
+      width: 100%; 
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Lighten shadow */
+  }
+
+  .archive-card h5 {
+      font-size: 1.2rem; /* Smaller font for smaller screens */
+  }
+
+  .archive-card p,
+  .archive-card h3 {
+      font-size: 1rem; /* Adjust paragraph and header font size */
+  }
+
+  .card {
+      gap: 10px; /* Increase gap for better spacing on mobile */
+  }
+
+  body {
+      padding: 10px; /* Reduce body padding on mobile */
+  }
+
+  a {
+      font-size: 0.9rem; /* Reduce link font size on mobile */
+  }
+}
+
+/* Tablet Responsiveness (Below 920px) */
+@media only screen and (max-width: 920px) {
+
+  body {
+      padding: 15px; 
+  }
+
+  .archive-card {
+      margin: 15px;
+      width: calc(50% - 30px); 
+  }
+
+  .archive-card h5 {
+      font-size: 1.3rem; 
+  }
+
+  .archive-card p,
+  .archive-card h3 {
+      font-size: 1.1rem; 
+  }
+
+  .card {
+      gap: 10px;
+  }
+}
+
+/* Dark Mode Support */
+@media (prefers-color-scheme: dark) {
+  body {
+      background: var(--blueColor);
+      color: white;
+  }
+
+  .archive-card {
+      background-color: #333; 
+      color: #f4f4f9; 
+  }
+}
+
+/* Light Mode Support */
+@media (prefers-color-scheme: light) {
+  body {
+      background: #ddd;
+      color: black;
+  }
+
+  .archive-card {
+      background-color: #fff; 
+      color: #333;
+  }
+}

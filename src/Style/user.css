@@ -1,0 +1,93 @@
+:root {
+
+    --whiteColor: #ffffff;
+    --error: rgb(204, 14, 14);
+    --blueColor: #008DDA;
+    --blueActiveColor: #29b4e2;
+}
+
+/* all styles  ---------------------------*/
+
+
+* {
+    box-sizing: border-box;
+}
+
+*:focus {
+    outline: none;
+}
+
+/* body syles  */
+body {
+    font-family: 'Roboto',  sans-serif;
+    background-color: var(--blueColor);
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    margin: 0;
+}
+
+
+/* hero section */
+section {
+    margin: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.logout {
+    padding: 5px;
+    margin: 5px;
+}
+
+.logout:hover {
+    cursor: pointer;
+}
+
+/* for responsiveness */
+
+@media only screen and (max-width: 720px) {
+    #loading {
+        width: 20px;
+        height: 20px;
+    }
+}
+
+
+/* for ipods and tables */
+
+@media only screen and (max-width: 920px) {
+
+    body {
+        min-width: 360px;
+    }
+}
+
+/* 
+  for mobile */
+
+@media only screen and (max-width: 556px) {
+
+    body {
+        min-width: 360px;
+    }
+}
+
+/*   for dark mode */
+
+@media (prefers-color-scheme: dark) {
+    body {
+        background: #333;
+        color: white;
+    }
+
+}
+
+@media (prefers-color-scheme: light) {
+    body {
+        background: #ddd;
+        color: black;
+    }
+
+}

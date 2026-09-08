@@ -1,0 +1,109 @@
+:root {
+    --blueColor: #008DDA;
+    --blueActiveColor: #29b4e2;
+    --redColor: #fa1717;  
+    --greyColor: #4b4a4a;
+    --whiteColor: #fff;
+}
+
+/* Not Found Section */
+.not_found {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding-top: 150px; 
+    text-align: center;
+    flex-direction: column;
+}
+
+.not_found p {
+    color: var(--whiteColor);
+    font-size: 1.5rem;
+    font-weight: 800;
+}
+
+/* No Access Container */
+.NoAccessContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 40px;
+    margin: 50px auto; 
+    width: 100%; 
+    justify-content: flex-start;
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* For Mobile Responsiveness */
+@media only screen and (max-width: 720px) {
+
+    .not_found {
+        padding-top: 80px; 
+    }
+
+    .not_found p {
+        font-size: 1.2rem; 
+    }
+
+    .NoAccessContainer {
+       
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        align-content: center;
+        margin: 0px;
+        padding: 20px;
+        width: 100%;       
+        box-shadow: none; 
+    }
+}
+
+/* For Tablets and Medium Screens */
+@media only screen and (max-width: 920px) {
+
+    .not_found {
+        padding-top: 120px; /* Adjust padding for tablet screens */
+    }
+
+    .NoAccessContainer {
+        margin: 0px ;
+        padding: 30px;
+        width: 90%; 
+    }
+}
+
+/* Dark Mode Support */
+@media (prefers-color-scheme: dark) {
+    body {
+        background: var(--blueColor);
+        color: white;
+    }
+
+    .NoAccessContainer {
+        background-color: white;
+        color: var(--whiteColor);
+    }
+
+    .not_found p {
+        color: var(--whiteColor);
+    }
+}
+
+/* Light Mode Support */
+@media (prefers-color-scheme: light) {
+    body {
+        background: #ddd;
+        color: black;
+    }
+
+    .NoAccessContainer {
+        background-color: white;
+        color: black;
+    }
+
+    .not_found p {
+        color: var(--greyColor);
+    }
+}

@@ -1,0 +1,25 @@
+[debug] [2024-03-04T23:28:07.148Z] ----------------------------------------------------------------------
+[debug] [2024-03-04T23:28:07.153Z] Command:       C:\Program Files\nodejs\node.exe C:\Users\desire\AppData\Roaming\npm\node_modules\firebase-tools\lib\bin\firebase.js hosting:channel:deploy preview_name
+[debug] [2024-03-04T23:28:07.153Z] CLI Version:   13.4.0
+[debug] [2024-03-04T23:28:07.153Z] Platform:      win32
+[debug] [2024-03-04T23:28:07.154Z] Node Version:  v21.6.2
+[debug] [2024-03-04T23:28:07.154Z] Time:          Tue Mar 05 2024 00:28:07 GMT+0100 (Central European Standard Time)
+[debug] [2024-03-04T23:28:07.154Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2024-03-04T23:28:07.256Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2024-03-04T23:28:07.257Z] > authorizing via signed-in user (byadiso@gmail.com)
+[debug] [2024-03-04T23:28:07.257Z] [iam] checking project mybrand-df7b7 for permissions ["firebase.projects.get","firebasehosting.sites.update"]
+[debug] [2024-03-04T23:28:07.259Z] >>> [apiv2][query] POST https://cloudresourcemanager.googleapis.com/v1/projects/mybrand-df7b7:testIamPermissions [none]
+[debug] [2024-03-04T23:28:07.259Z] >>> [apiv2][(partial)header] POST https://cloudresourcemanager.googleapis.com/v1/projects/mybrand-df7b7:testIamPermissions x-goog-quota-user=projects/mybrand-df7b7
+[debug] [2024-03-04T23:28:07.259Z] >>> [apiv2][body] POST https://cloudresourcemanager.googleapis.com/v1/projects/mybrand-df7b7:testIamPermissions {"permissions":["firebase.projects.get","firebasehosting.sites.update"]}
+[debug] [2024-03-04T23:28:08.206Z] <<< [apiv2][status] POST https://cloudresourcemanager.googleapis.com/v1/projects/mybrand-df7b7:testIamPermissions 200
+[debug] [2024-03-04T23:28:08.207Z] <<< [apiv2][body] POST https://cloudresourcemanager.googleapis.com/v1/projects/mybrand-df7b7:testIamPermissions {"permissions":["firebase.projects.get","firebasehosting.sites.update"]}
+[debug] [2024-03-04T23:28:08.208Z] >>> [apiv2][query] GET https://firebase.googleapis.com/v1beta1/projects/mybrand-df7b7 [none]
+[debug] [2024-03-04T23:28:08.579Z] <<< [apiv2][status] GET https://firebase.googleapis.com/v1beta1/projects/mybrand-df7b7 200
+[debug] [2024-03-04T23:28:08.579Z] <<< [apiv2][body] GET https://firebase.googleapis.com/v1beta1/projects/mybrand-df7b7 {"projectId":"mybrand-df7b7","projectNumber":"1073877765217","displayName":"myBrand","name":"projects/mybrand-df7b7","resources":{"hostingSite":"mybrand-df7b7","realtimeDatabaseInstance":"mybrand-df7b7-default-rtdb","storageBucket":"mybrand-df7b7.appspot.com","locationId":"us-central"},"state":"ACTIVE","etag":"1_9b133441-ef10-43e4-91c0-ba0108c138cc"}
+[debug] [2024-03-04T23:28:08.582Z] TypeError: Cannot read properties of undefined (reading 'source')
+    at deploy (C:\Users\desire\AppData\Roaming\npm\node_modules\firebase-tools\lib\deploy\index.js:53:77)
+    at Command.hostingChannelDeployAction [as actionFn] (C:\Users\desire\AppData\Roaming\npm\node_modules\firebase-tools\lib\commands\hosting-channel-deploy.js:90:51)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+[error] 
+[error] Error: An unexpected error has occurred.

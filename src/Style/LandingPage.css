@@ -1,0 +1,134 @@
+*, *::before, *::after {
+    box-sizing: border-box;
+}
+
+:root {
+    --blueColor: #008DDA;
+    --textColorGreyParagraph: #333; /* Assuming the grey color */
+}
+
+/* all styles  ---------------------------*/
+
+* {
+    box-sizing: border-box;
+}
+
+*:focus {
+    outline: none;
+}
+
+/* body styles  */
+body {
+    font-family: 'Roboto', sans-serif;
+    background-color: var(--blueColor);
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    margin: 0;
+    padding: 0; /* Added to prevent unwanted horizontal scrolling */
+}
+
+
+.main_Landing {
+    display: flex;
+    justify-content: center; 
+    align-items: center;    
+    flex-direction: row; 
+    height: 100vh;        
+    background-color: var(--blueColor); 
+   
+}
+
+
+/* Mobile responsiveness */
+@media only screen and (max-width: 720px) {
+    .ngana_logo {
+        margin-right: auto; 
+        margin-left: auto;  
+        font-size: 24px; 
+        text-align: center;
+    }
+
+    .welcome_text {
+        color: var(--blueColor);
+        font-size: 1.2rem; 
+        text-align: center; 
+        padding: 10px;
+    }
+
+    .hero_section_header {
+        display: flex;
+        justify-content: center;
+        flex-direction: column;
+        align-items: center; 
+    }
+
+    .hero_section_header div .fa {
+        padding: 5px;
+    }
+
+    .image_landing {
+        display: none;
+    }
+
+    .hero_section {
+        font-size: 0.8rem;
+        padding: 15px; 
+        text-align: center; 
+    }
+
+    
+   
+
+   
+
+    /* remove link style on a tag */
+    a, button {
+        all: unset;
+    }
+}
+
+/* For iPads and tablets */
+@media only screen and (max-width: 920px) {
+    body {
+        min-width: 360px;
+    }
+
+    .ngana_logo {
+        margin-right: 50px;
+        margin-left: 50px;
+        font-size: 30px;
+    }
+
+    .hero_section {
+        font-size: 0.9rem;
+        padding: 20px; /* More padding for larger tablets */
+        text-align: center;
+    }
+
+   
+
+    .dropdown {
+        margin-bottom: 10px;
+    }
+
+    .main_who_items img {
+        width: 90%;
+        max-width: 400px;
+    }
+    
+}
+
+/* For dark mode */
+@media (prefers-color-scheme: dark) {
+    body {       
+        color: white;
+    }
+}
+
+@media (prefers-color-scheme: light) {
+    body {
+        background: #ddd;
+        color: black;
+    }
+}

@@ -1,0 +1,42 @@
+*, *::before, *::after {
+    box-sizing: border-box;
+}
+
+
+:root {
+
+    --blackColorHeader: rgb(0, 0, 0);
+    --blackColor: #02090be3;
+    --whiteColor: #ffffff;
+    --error: rgb(204, 14, 14);
+}
+
+/* all styles  ---------------------------*/
+
+
+* {
+    box-sizing: border-box;
+}
+
+*:focus {
+    outline: none;
+}
+
+
+footer {    
+   
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    background: var(--blackColor);
+    color: var(--whiteColor);
+   
+}
+
+footer div {
+    margin-right: 0px;
+}

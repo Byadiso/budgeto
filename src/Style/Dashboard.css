@@ -1,0 +1,143 @@
+*, *::before, *::after {
+    box-sizing: border-box;
+}
+
+:root {
+    --blueColor: #008DDA;
+    --blueActiveColor: #29b4e2;
+    --redColor: #fa1717;  
+    --greyColor: #4b4a4a;
+    --backgroundGrey: rgba(244, 244, 244, 0.918);
+}
+
+/* Base Styles */
+
+body {
+    font-family: 'Roboto', sans-serif;
+    background-color: var(--backgroundGrey);
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    margin: 0;
+    padding: 0; /* Ensure no unwanted overflow */
+}
+
+/* Dashboard Main Container */
+.main_dashboard {
+    background-color: var(--backgroundGrey);
+    padding: 10px;
+}
+
+/* Summary Section */
+.bugdet_summary {
+    display: flex;
+    flex-direction: row;    
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    flex-wrap: wrap; 
+}
+
+/* Summary Item Styles */
+.bugdet_summary_item {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: white;
+    margin: 10px; 
+    padding: 15px; 
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    min-width: 150px; 
+    max-width: 300px; 
+}
+
+/* Dashboard Grid Layout */
+.dashboard_grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr); 
+    gap: 20px; 
+}
+
+.dashboard_item {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    text-align: center; /* Centered text for smaller screens */
+}
+
+/* Color Backgrounds */
+.goal_amount {
+    background-color: rgba(0, 128, 0, 0.411);
+}
+
+.home_amount {
+    background-color: rgba(255, 0, 0, 0.263);
+}
+
+.payback {
+    background-color: rgb(255, 0, 0);
+}
+
+/* Mobile Responsiveness */
+@media only screen and (max-width: 720px) {
+    body {
+        padding: 0 10px; /* Add padding to prevent overflow */
+    }
+
+    .bugdet_summary {
+        flex-direction: column; 
+        align-items: stretch; 
+    }
+
+    .dashboard_grid {
+        grid-template-columns: 1fr; 
+        gap: 15px; 
+        padding-right: 0px;
+    }
+
+    .dashboard_item {
+        padding: 15px; /* Reduced padding for smaller screens */
+        margin: 10px 0; /* Add vertical spacing between items */
+        width: 100%; /* Ensure items take full width */
+    }
+}
+
+/* Tablets and Larger Mobile Devices */
+@media only screen and (min-width: 720px) and (max-width: 920px) {
+    body {
+        padding: 0 15px; /* Add padding for better spacing */
+    }
+
+    .bugdet_summary {
+        flex-wrap: wrap; /* Ensure proper wrapping on medium screens */
+    }
+
+    .dashboard_grid {
+        grid-template-columns: repeat(2, 1fr); /* Two columns for larger mobile */
+    }
+
+    .dashboard_item {
+        padding: 20px; /* Maintain padding for larger mobile screens */
+    }
+}
+
+/* Dark Mode */
+@media (prefers-color-scheme: dark) {
+    body {
+        background: var(--blueColor);
+        color: white;
+    }
+}
+
+/* Light Mode */
+@media (prefers-color-scheme: light) {
+    body {
+        background: #ddd;
+        color: black;
+    }
+}

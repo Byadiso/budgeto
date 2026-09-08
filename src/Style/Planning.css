@@ -1,0 +1,122 @@
+
+*, *::before, *::after {
+    box-sizing: border-box;
+}
+
+:root {
+    --blueColor: #008DDA;
+    --blueActiveColor: #29b4e2;
+    --redColor: #fa1717;  
+    --greyColor: #4b4a4a;
+    --backgroundGrey: rgba(244, 244, 244, 0.918)
+  
+}
+
+/* all styles  ---------------------------*/
+
+
+* {
+    box-sizing: border-box;
+}
+
+*:focus {
+    outline: none;
+}
+
+/* body syles  */
+
+.Add_plan:hover{
+    cursor: pointer;
+}
+
+.budget-cards-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    margin-top: 20px;
+  }
+
+  .budget-cards-container button {    
+    margin: 2.5px;
+  }
+
+  .btn-remove{
+    background-color: rgba(203, 66, 66, 0.717);
+    color: white;
+  }
+
+  .btn-edit{
+    background-color: rgba(70, 141, 70, 0.717);
+    color: white;
+  }
+  
+  .budget-card {
+    background-color: #f1f1f1;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 15px;
+    width: 200px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s;
+  }
+  
+  .budget-card:hover {
+    transform: translateY(-5px);
+  }
+  
+  .budget-card h5 {
+    margin: 0;
+    font-size: 1.2em;
+    color: #333;
+  }
+  
+  .budget-card p {
+    margin: 5px 0;
+    font-size: 0.9em;
+    color: #555;
+  }
+  
+
+  .total-amount {
+    text-align: center;
+    margin: 20px;
+    font-size: 2em;
+    font-weight: bold;
+  }
+  
+  .total-amount h2 {
+    transition: color 0.3s ease; /* Smooth color transition */
+  }
+  
+
+  
+
+
+
+/* for responsiveness */
+/* @media only screen and (max-width: 720px) {
+
+         
+} */
+
+/* 
+for ipods and tables */
+
+@media only screen and (max-width: 920px) {
+
+    body {
+        min-width: 360px;
+    } 
+
+  
+    .dashboard_content{
+        display: flex;
+        flex-direction: column;
+    }
+
+}
+
+
+
+
+

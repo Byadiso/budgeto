@@ -1,0 +1,171 @@
+
+*, *::before, *::after {
+    box-sizing: border-box;
+}
+
+:root {
+    --blueColor: #008DDA;
+    --blueActiveColor: #29b4e2;
+    --redColor: #fa1717;  
+    --greyColor: #4b4a4a;
+    --backgroundGrey: rgba(244, 244, 244, 0.918)
+  
+}
+
+/* all styles  ---------------------------*/
+
+/* Modal Backdrop */
+.modal-backdrop {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.5); /* Dark semi-transparent background */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 999; /* Ensure it stays above other content */
+  }
+  
+  /* Modal Box */
+  .modal {
+    background-color: white;
+    width: 400px;
+    padding: 30px;
+    border-radius: 8px;
+    box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.1);
+    position: relative;
+    z-index: 1000;
+  }
+  
+  /* Modal Header */
+  .modal h2 {
+    margin-bottom: 20px;
+    font-size: 1.5em;
+    text-align: center;
+  }
+  
+  /* Form Fields */
+  .form-group {
+    margin-bottom: 15px;
+  }
+
+  .bugdet_name input {
+    border: 2px solid #ccc;
+  }
+  
+  
+  label {
+    display: block;
+    font-size: 0.9em;
+    color: #333;
+    margin-bottom: 5px;
+  }
+  
+  /* Input Fields */
+  input {
+    width: 100%;
+    padding: 12px 15px; /* Increased padding for better input visibility */
+    font-size: 1em; /* Larger font size for readability */
+    color: #333; /* Darker text color for contrast */
+    background-color: #f9f9f9; /* Light background color */
+    border: 2px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+  }
+  
+  /* Input Focus Style */
+  input:focus {
+    border-color: #007bff; /* Blue border on focus */
+    background-color: #fff; /* White background when focused */
+    color: #000; /* Ensure text is visible in focus */
+    outline: none; /* Remove default focus outline */
+    box-shadow: 0px 0px 5px rgba(0, 123, 255, 0.5); /* Subtle blue shadow */
+  }
+  
+  /* Modal Buttons */
+  .modal-actions {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+  }
+  
+  button {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 0.9em;
+  }
+  
+  /* Submit Button */
+  button[type="submit"] {
+    background-color: #28a745;
+    color: white;
+    font-weight: bold;
+  }
+  
+  button[type="submit"]:hover {
+    background-color: #218838;
+  }
+  
+  /* Close Button */
+  .modal-actions>button[type="button"] {
+    background-color: #dc3545;
+    color: white;
+    font-weight: bold;
+  }
+  
+ .modal-actions>button[type="button"]:hover {
+    background-color: #c82333;
+  }
+  
+  .form-group select {
+    width: 100%;
+    padding: 10px;
+    margin-top: 5px;
+    border-radius: 4px;
+    border: 1px solid #ccc;
+    font-size: 1em;
+    outline: none;
+  }
+  
+  .form-group select:focus {
+    border-color: #007bff;
+  }
+  
+  
+
+  
+  
+
+
+/* for responsiveness */
+@media only screen and (max-width: 720px) {
+
+  button {
+    padding: 5px 2px;
+    
+  }
+ 
+}
+
+/* 
+for ipods and tables */
+
+@media only screen and (max-width: 920px) {
+
+    body {
+        min-width: 360px;
+    }
+  
+
+  
+    button {
+      padding: 5px 2px;
+      
+    }
+  
+}
+

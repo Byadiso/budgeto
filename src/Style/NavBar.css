@@ -1,0 +1,273 @@
+/* esetting my box sizing */
+*, *::before, *::after {
+    box-sizing: border-box;
+}
+
+/* my variables style */
+:root {   
+    --blueColor: #008DDA;
+    --blueActiveColor: #29b4e2;
+    --redColor: #fa1717;  
+    --greyColor: #4b4a4a;
+}
+
+/* all styles  ---------------------------*/
+
+
+* {
+    box-sizing: border-box;
+}
+
+*:focus {
+    outline: none;
+}
+
+/* body syles  */
+
+body {
+    font-family: 'Roboto',  sans-serif;
+    background-color: var(--whiteColor);
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    margin: 0;
+}
+
+/* menu */
+.main_nav a {
+    color: var(--whiteColor);
+}
+
+.main_nav {
+    color: var(--textColorWhite);
+    background-color: var(--blueColor)
+}
+
+.menu .fa {
+    margin: 10px;
+}
+
+.menu {
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    color: var(--whiteColor);
+
+}
+
+.menu a {
+    text-decoration: none;
+}
+
+
+
+/* DropDown menu */
+.dropbtn {
+    color: white;
+    padding: 20px;
+    font-size: 16px;
+    border: none;
+}
+
+
+.dropdown {
+    position: relative;
+    display: inline-block;    
+    padding: 20px;
+}
+
+
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #f1f1f1;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+    z-index: 1;
+}
+
+.dropdown-content a {
+    color: black;
+    padding: 10px 16px;
+    text-decoration: none;
+    display: block;
+}
+
+/* Change color of dropdown links on hover */
+.dropdown-content a:hover {
+    background-color: #ddd;    
+}
+
+/* Show the dropdown menu on hover */
+.dropdown:hover .dropdown-content {
+    display: block; 
+    margin-top: 24px;
+    
+}
+
+
+.logout:hover{
+    background-color: #ddd;   
+}
+
+.active{
+      color: var(--blueActiveColor);
+}
+
+
+
+
+
+/* for responsiveness  mobile*/
+@media only screen and (max-width: 720px) {
+    body {
+        min-width: 360px;
+    }
+    .ngana_logo {
+        margin-right: 200px;
+       color: red;
+    }
+    .menu {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background-color: var(--blackColorHeader);
+        justify-content: space-around;
+        flex-direction: column;
+        color: red;
+    }
+    .nav_small {
+        display: inline;
+    }
+    .small_device {
+        display: none;
+    }
+    .hero_section_header {
+        display: flex;
+        justify-content: center;
+        flex-direction: column;
+    }
+    .hero_section_header div .fa {
+        padding: 5px;
+    }
+    .main_content {
+        display: flex;
+        justify-content: center;
+        flex-direction: column;        
+    }  
+
+    .burger_menu {
+        display: block;
+        font-size: 30px;
+    }
+    .hide_burger {
+        display: none;
+    }
+
+    .hero_section {
+        font-size: .8rem;
+    }
+    .hire_text {
+        font-size: .7rem;
+        min-width: 130px;
+    }
+
+    .statistic_section {
+        background-color: var(--whiteColor);
+        display: flex;       
+        color: var(--textColorGrey);
+        justify-content: center;
+        align-items: center;
+        padding: var(--spacing);
+        border-radius: 20px;
+        box-shadow: 0.1em 0.1em 0.2em;
+        box-shadow: none;
+        width: 100%;
+        margin-left: 5px;
+        margin-right: 10px;
+        margin-top: -35px;
+        padding: 10px
+    }
+
+
+    /* for main_who_items */
+    .main_who_items {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+        color: var(--textColorGreyParagraph);
+        margin: 20px;
+    }
+
+    .main_who_items img {
+        width: 100%;
+    }
+
+    /* for services */
+    .service_content {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+    }
+
+    /* remove link style on a tag */
+    a, button {
+        all: unset;
+    }
+
+  
+   
+}
+
+/* 
+for ipads and tables */
+@media only screen and (max-width: 920px) {
+    body {
+        min-width: 360px;
+    }
+   
+    .menu {
+        display: flex;
+        justify-content: space-around;
+        flex-direction: column;
+     
+    }
+    .hero_section {
+        font-size: .8rem;
+    }
+  
+    
+
+    .dropdown {
+       margin-bottom: 10px;
+    }
+
+    .main_who_items img {
+        width: 100%;
+    }
+
+    
+
+  
+}
+
+
+
+/* 
+  for dark mode */
+@media (prefers-color-scheme: dark) {
+    body {
+     
+        color: white;
+    }
+}
+
+@media (prefers-color-scheme: light) {
+    body {
+        background: #ddd;
+        color: black;
+    }
+}
