@@ -1,0 +1,224 @@
+@import url("https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@500&display=swap");
+
+:root {
+  --ink: #1c2b29;
+  --paper: #edf1e9;
+  --teal: #0e7c86;
+  --teal-deep: #0b646c;
+  --line: #cfd8cb;
+  --muted: #4d5f55;
+}
+
+:where(.nomatch_page),
+:where(.nomatch_page) *,
+:where(.nomatch_page) *::before,
+:where(.nomatch_page) *::after {
+  box-sizing: border-box;
+}
+
+.nomatch_page :focus-visible {
+  outline: 2px solid var(--teal-deep);
+  outline-offset: 2px;
+}
+
+.nomatch_page {
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  min-height: 70vh;
+  /* top padding leaves room for the navbar */
+  padding: 2rem 1rem 3rem; /* was clamp(5rem, 14vh, 8rem) 1rem 3rem */
+  background: var(--paper);
+  font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+    sans-serif;
+  color: var(--ink);
+  text-align: center;
+}
+
+.nomatch_card {
+  width: 100%;
+  max-width: 520px;
+  padding: 2.25rem 2rem 2rem;
+  background: #fff;
+  border: 1px solid var(--line);
+  border-top: 3px solid var(--teal);
+  border-radius: 14px;
+  box-shadow: 0 1px 2px rgba(28, 43, 41, 0.04),
+    0 12px 32px rgba(28, 43, 41, 0.06);
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .nomatch_card { animation: nomatch_in 0.4s ease both; }
+}
+@keyframes nomatch_in {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.nomatch_page .nomatch_code {
+  margin: 0 0 0.25rem;
+  font-family: "IBM Plex Mono", ui-monospace, monospace;
+  font-weight: 500;
+  font-size: clamp(3.5rem, 14vw, 5rem);
+  line-height: 1;
+  letter-spacing: -0.02em;
+  color: var(--teal);
+  opacity: 0.85;
+}
+
+.nomatch_page .nomatch_title {
+  margin: 0 0 0.6rem;
+  font-family: "Fraunces", Georgia, serif;
+  font-weight: 600;
+  font-size: clamp(1.5rem, 5vw, 1.9rem);
+  line-height: 1.15;
+  letter-spacing: -0.01em;
+  color: var(--ink);
+}
+.nomatch_title:focus { outline: none; }
+
+.nomatch_page .nomatch_text {
+  margin: 0 0 1.25rem;
+  font-size: 0.95rem;
+  line-height: 1.5;
+  color: var(--muted);
+}
+
+/* the address the visitor tried */
+.nomatch_page .nomatch_path {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  margin: 0 0 1.6rem;
+  padding: 0.6rem 0.9rem;
+  background: #f4f6f0;
+  border: 1px dashed var(--line);
+  border-radius: 10px;
+  font-size: 0.82rem;
+  color: var(--muted);
+}
+.nomatch_path code {
+  font-family: "IBM Plex Mono", ui-monospace, monospace;
+  font-size: 0.85rem;
+  color: var(--ink);
+  overflow-wrap: anywhere;
+}
+
+/* actions */
+.nomatch_actions {
+  display: grid;
+  grid-template-columns: 1.4fr 1fr;
+  gap: 0.6rem;
+}
+
+.nomatch_primary,
+.nomatch_secondary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  min-height: 48px;
+  border-radius: 10px;
+  font-family: inherit;
+  font-size: 0.95rem;
+  font-weight: 600;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.nomatch_primary {
+  border: 1px solid var(--teal);
+  background: var(--teal);
+  color: #fff;
+  transition: background 0.15s ease;
+}
+.nomatch_primary:hover { background: var(--teal-deep); }
+
+.nomatch_secondary {
+  border: 1px solid var(--line);
+  background: #fff;
+  color: var(--ink);
+  font-weight: 500;
+}
+.nomatch_secondary:hover {
+  border-color: var(--teal);
+  color: var(--teal-deep);
+}
+
+/* shortcuts */
+.nomatch_shortcuts {
+  margin-top: 1.75rem;
+  padding-top: 1.25rem;
+  border-top: 1px dashed var(--line);
+}
+
+.nomatch_page .nomatch_shortcuts_title {
+  margin: 0 0 0.75rem;
+  font-size: 0.74rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.nomatch_shortcuts_grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0.6rem;
+}
+
+.nomatch_tile {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 2px;
+  padding: 0.75rem 0.9rem;
+  background: #fff;
+  border: 1px solid var(--line);
+  border-left: 4px solid var(--teal);
+  border-radius: 10px;
+  text-align: left;
+  text-decoration: none;
+  color: var(--ink);
+  transition: transform 0.12s ease, border-color 0.12s ease;
+}
+.nomatch_tile:hover {
+  transform: translateY(-1px);
+  border-color: var(--teal);
+}
+.nomatch_tile_label { font-size: 0.9rem; font-weight: 600; }
+.nomatch_tile_hint { font-size: 0.76rem; color: var(--muted); }
+
+@media (prefers-reduced-motion: reduce) {
+  .nomatch_primary,
+  .nomatch_tile { transition: none; }
+}
+
+@media (max-width: 520px) {
+  .nomatch_card { padding: 1.75rem 1.25rem 1.5rem; }
+  .nomatch_actions { grid-template-columns: 1fr; }
+  .nomatch_shortcuts_grid { grid-template-columns: 1fr; }
+}
+
+
+
+.nomatch_page .nomatch_suggest {
+  margin: -0.6rem 0 1.4rem;
+  font-size: 0.92rem;
+  color: var(--muted);
+}
+.nomatch_suggest a {
+  font-weight: 600;
+  color: var(--teal-deep);
+  text-decoration: underline;
+}
+
+.nomatch_shortcuts_grid {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+@media (max-width: 520px) {
+  .nomatch_shortcuts_grid { grid-template-columns: 1fr; }
+}

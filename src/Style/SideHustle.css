@@ -1,0 +1,402 @@
+@import url("https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@500&display=swap");
+
+:root {
+  --ink: #1c2b29;
+  --paper: #edf1e9;
+  --paper-card: #fbfaf4;
+  --teal: #0e7c86;
+  --teal-deep: #0b646c;
+  --positive: #2f7a4d;
+  --negative: #b23a2e;
+  --line: #cfd8cb;
+  --muted: #4d5f55;
+}
+
+:where(.sidehustle_page),
+:where(.sidehustle_page) *,
+:where(.sidehustle_page) *::before,
+:where(.sidehustle_page) *::after {
+  box-sizing: border-box;
+}
+
+.sidehustle_page :focus-visible {
+  outline: 2px solid var(--teal-deep);
+  outline-offset: 2px;
+}
+
+.sidehustle_page {
+  display: block;
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 1.25rem 2rem 3.5rem;
+  background: var(--paper);
+  font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+    sans-serif;
+  color: var(--ink);
+  text-align: left;
+}
+
+.sidehustle_page > div,
+.sidehustle_page > header {
+  width: 100%;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .sidehustle_page { animation: sidehustle_fade_in 0.4s ease both; }
+}
+@keyframes sidehustle_fade_in {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.sidehustle_sr_only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* back + header */
+.sidehustle_back {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  min-height: 44px;
+  margin-left: -0.25rem;
+  text-decoration: none;
+  color: var(--muted);
+  font-size: 0.9rem;
+  font-weight: 500;
+}
+.sidehustle_back:hover { color: var(--teal-deep); }
+
+.sidehustle_header { margin: 0.5rem 0 1.5rem; }
+
+.sidehustle_page .sidehustle_title {
+  margin: 0 0 0.3rem;
+  font-family: "Fraunces", Georgia, serif;
+  font-weight: 600;
+  font-size: clamp(1.8rem, 5vw, 2.2rem);
+  line-height: 1.15;
+  letter-spacing: -0.01em;
+  color: var(--ink);
+}
+
+.sidehustle_page .sidehustle_subhead {
+  margin: 0;
+  font-size: 0.92rem;
+  color: var(--muted);
+}
+
+/* hero */
+.sidehustle_hero {
+  display: block;
+  margin-bottom: 1rem;
+  padding: 1.5rem 1.6rem;
+  background: var(--ink);
+  border-radius: 14px;
+}
+
+.sidehustle_page .sidehustle_hero_label {
+  display: block;
+  margin: 0;
+  font-size: 0.78rem;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #a9bdb8;
+}
+
+.sidehustle_page .sidehustle_hero_amount {
+  display: block;
+  margin: 8px 0 1.2rem;
+  font-family: "IBM Plex Mono", ui-monospace, monospace;
+  font-weight: 500;
+  font-size: clamp(2.1rem, 8vw, 3rem);
+  line-height: 1.1;
+  font-variant-numeric: tabular-nums;
+  overflow-wrap: anywhere;
+  color: #8fd6a9;
+}
+
+.sidehustle_hero_stats {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1rem;
+  padding-top: 1rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.16);
+}
+
+.sidehustle_page .sidehustle_hero_stat_label {
+  margin: 0 0 4px;
+  font-size: 0.72rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: #8fa39e;
+}
+.sidehustle_page .sidehustle_hero_stat_value {
+  margin: 0;
+  font-family: "IBM Plex Mono", ui-monospace, monospace;
+  font-weight: 500;
+  font-size: 1.05rem;
+  font-variant-numeric: tabular-nums;
+  overflow-wrap: anywhere;
+  color: #d6e2de;
+}
+
+/* panels */
+.sidehustle_panel {
+  display: block;
+  margin-bottom: 1rem;
+  padding: 1.2rem 1.3rem 1.3rem;
+  background: #fff;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+}
+
+.sidehustle_panel_head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 0.5rem;
+  margin-bottom: 0.9rem;
+}
+
+.sidehustle_page .sidehustle_panel_title {
+  margin: 0 0 0.9rem;
+  font-family: "Fraunces", Georgia, serif;
+  font-weight: 500;
+  font-size: 1.15rem;
+  color: var(--ink);
+}
+.sidehustle_panel_head .sidehustle_panel_title { margin: 0; }
+
+.sidehustle_page .sidehustle_compare {
+  margin: 0;
+  font-size: 0.84rem;
+  font-weight: 600;
+  color: var(--muted);
+}
+.sidehustle_compare.is_up { color: var(--positive); }
+.sidehustle_compare.is_down { color: var(--negative); }
+
+/* chart */
+.sidehustle_chart {
+  display: grid;
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+  gap: 10px;
+}
+.sidehustle_col {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  min-width: 0;
+}
+.sidehustle_col_value {
+  min-height: 1.1rem;
+  margin-bottom: 4px;
+  text-align: center;
+  font-family: "IBM Plex Mono", ui-monospace, monospace;
+  font-size: 0.7rem;
+  color: var(--muted);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.sidehustle_col_track {
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  height: 120px;
+  border-bottom: 1px solid var(--line);
+}
+.sidehustle_bar {
+  display: block;
+  width: 70%;
+  max-width: 44px;
+  border-radius: 6px 6px 0 0;
+  background: #9fcfd3;
+}
+.sidehustle_bar.is_current { background: var(--teal); }
+.sidehustle_bar.is_empty { background: var(--line); }
+.sidehustle_col_label {
+  margin-top: 6px;
+  text-align: center;
+  font-size: 0.76rem;
+  color: var(--muted);
+}
+
+/* sources */
+.sidehustle_sources {
+  display: flex;
+  flex-direction: column;
+  gap: 0.9rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.sidehustle_source_top {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 6px;
+}
+.sidehustle_source_name {
+  font-weight: 500;
+  overflow-wrap: anywhere;
+}
+.sidehustle_source_amount {
+  font-family: "IBM Plex Mono", ui-monospace, monospace;
+  font-weight: 500;
+  white-space: nowrap;
+}
+.sidehustle_share {
+  height: 6px;
+  border-radius: 999px;
+  background: #e6ebe1;
+  overflow: hidden;
+}
+.sidehustle_share_fill {
+  display: block;
+  height: 100%;
+  border-radius: 999px;
+  background: var(--teal);
+}
+.sidehustle_page .sidehustle_source_meta {
+  margin: 4px 0 0;
+  font-size: 0.78rem;
+  color: var(--muted);
+}
+
+/* filters */
+.sidehustle_filters {
+  display: block;
+  margin: 1.5rem 0 1.75rem;
+}
+.sidehustle_filters_row {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 200px);
+  gap: 0.75rem;
+  margin-bottom: 0.9rem;
+}
+.sidehustle_search,
+.sidehustle_select {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  width: 100%;
+  min-height: 46px;
+  padding: 0 0.85rem;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  background: #fff;
+  color: var(--muted);
+}
+.sidehustle_search:focus-within,
+.sidehustle_select:focus-within { border-color: var(--teal); }
+.sidehustle_search input,
+.sidehustle_select select {
+  width: 100%;
+  border: none;
+  outline: none;
+  background: transparent;
+  font-family: inherit;
+  font-size: 0.92rem;
+  color: var(--ink);
+}
+.sidehustle_select select { cursor: pointer; }
+
+.sidehustle_chips { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+.sidehustle_chip {
+  min-height: 40px;
+  padding: 0.35rem 1rem;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: #fff;
+  color: var(--ink);
+  font-family: inherit;
+  font-size: 0.87rem;
+  font-weight: 500;
+  cursor: pointer;
+}
+.sidehustle_chip:hover { border-color: var(--teal); }
+.sidehustle_chip.is_active {
+  background: var(--teal);
+  border-color: var(--teal);
+  color: #fff;
+}
+
+/* entries */
+.sidehustle_section_head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 1rem;
+  width: 100%;
+  margin-bottom: 0.85rem;
+}
+.sidehustle_section_head .sidehustle_panel_title { margin: 0; }
+.sidehustle_page .sidehustle_count {
+  margin: 0;
+  font-size: 0.86rem;
+  color: var(--muted);
+}
+.sidehustle_link_btn {
+  margin-left: 0.75rem;
+  padding: 0;
+  border: none;
+  background: none;
+  color: var(--teal-deep);
+  font-family: inherit;
+  font-size: inherit;
+  font-weight: 600;
+  text-decoration: underline;
+  cursor: pointer;
+}
+.sidehustle_table {
+  display: block;
+  width: 100%;
+  overflow-x: auto;
+}
+
+.sidehustle_empty {
+  padding: 2.5rem 1.25rem;
+  text-align: center;
+  background: #fff;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  color: var(--muted);
+}
+.sidehustle_page .sidehustle_empty p {
+  margin: 0 0 0.25rem;
+  font-weight: 500;
+  color: var(--ink);
+}
+.sidehustle_empty_sub { font-size: 0.9rem; }
+
+/* skeleton */
+.sidehustle_skel { background: #e1e8dc; border-radius: 10px; }
+.sidehustle_skel_title { width: 10rem; height: 2rem; margin: 1rem 0 1.5rem; }
+.sidehustle_skel_hero { height: 10rem; margin-bottom: 1.5rem; }
+.sidehustle_skel_table { height: 14rem; }
+@media (prefers-reduced-motion: no-preference) {
+  .sidehustle_skel { animation: sidehustle_pulse 1.4s ease-in-out infinite; }
+}
+@keyframes sidehustle_pulse { 50% { opacity: 0.55; } }
+
+/* mobile */
+@media (max-width: 640px) {
+  .sidehustle_page { padding: 0.75rem 1rem 2.5rem; }
+  .sidehustle_hero { padding: 1.2rem; }
+  .sidehustle_hero_stats { gap: 0.6rem; }
+  .sidehustle_panel { padding: 1rem; }
+  .sidehustle_chart { gap: 6px; }
+  .sidehustle_col_value { font-size: 0.62rem; }
+  .sidehustle_filters_row { grid-template-columns: 1fr; }
+}

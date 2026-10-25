@@ -1,0 +1,360 @@
+/* Fonts: loaded by Dashboard.css / index.html. Tokens come from :root there. */
+
+:where(.main_settings),
+:where(.main_settings) *,
+:where(.main_settings) *::before,
+:where(.main_settings) *::after {
+  box-sizing: border-box;
+}
+
+.main_settings :focus-visible {
+  outline: 2px solid var(--teal-deep, #0b646c);
+  outline-offset: 2px;
+}
+
+/* ------------------------------------------------------------------
+   Shell (no min-height: the Navbar's <main> already fills the viewport)
+------------------------------------------------------------------- */
+
+.main_settings {
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 1.25rem 2rem 3rem;
+  background: var(--paper, #edf1e9);
+  font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+    sans-serif;
+  color: var(--ink, #1c2b29);
+  text-align: left; /* a global rule was centring everything */
+}
+
+.settings_sr_only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.settings_back {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  min-height: 44px;
+  margin-left: -0.25rem;
+  text-decoration: none;
+  color: var(--muted, #4d5f55);
+  font-size: 0.9rem;
+  font-weight: 500;
+}
+
+.settings_back:hover {
+  color: var(--ink, #1c2b29);
+}
+
+.settings_header {
+  margin: 0.5rem 0 1.75rem;
+}
+
+.main_settings .settings_title {
+  margin: 0 0 0.3rem;
+  font-family: "Fraunces", Georgia, serif;
+  font-weight: 600;
+  font-size: clamp(1.7rem, 5vw, 2.1rem);
+  line-height: 1.15;
+  letter-spacing: -0.01em;
+  color: var(--ink, #1c2b29);
+}
+
+.main_settings .settings_subhead {
+  margin: 0;
+  font-size: 0.92rem;
+  color: var(--muted, #4d5f55);
+}
+
+/* ------------------------------------------------------------------
+   Cards
+------------------------------------------------------------------- */
+
+.settings_card {
+  margin-bottom: 1.25rem;
+  padding: 1.25rem 1.5rem 1.5rem;
+  background: #fff;
+  border: 1px solid var(--line, #dde3d7);
+  border-radius: 12px;
+  box-shadow: 0 1px 2px rgba(28, 43, 41, 0.04);
+}
+
+.main_settings .settings_card_title {
+  margin: 0 0 1rem;
+  font-family: "Fraunces", Georgia, serif;
+  font-weight: 500;
+  font-size: 1.15rem;
+  color: var(--ink, #1c2b29);
+}
+
+/* ------------------------------------------------------------------
+   Account details
+------------------------------------------------------------------- */
+
+.settings_details {
+  display: grid;
+  grid-template-columns: 7rem 1fr;
+  gap: 0.75rem 1rem;
+  margin: 0 0 1.25rem;
+}
+
+.settings_details dt {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--muted, #4d5f55);
+}
+
+.settings_details dd {
+  margin: 0;
+  min-width: 0;
+  overflow-wrap: anywhere;
+  font-size: 0.95rem;
+}
+
+.settings_role {
+  display: inline-block;
+  padding: 0.1rem 0.7rem;
+  border-radius: 999px;
+  background: #e3f1e6;
+  color: #1f5a38;
+  font-size: 0.8rem;
+  font-weight: 600;
+}
+
+.settings_role[data-role="member"] {
+  background: #e9ece6;
+  color: #3f4b45;
+}
+
+/* ------------------------------------------------------------------
+   Goal form
+------------------------------------------------------------------- */
+
+.main_settings .settings_goal_current {
+  margin: 0 0 0.25rem;
+  font-family: "IBM Plex Mono", ui-monospace, monospace;
+  font-weight: 500;
+  font-size: clamp(1.7rem, 6vw, 2.2rem);
+  line-height: 1.1;
+  font-variant-numeric: tabular-nums;
+  overflow-wrap: anywhere;
+}
+
+.main_settings .settings_goal_deadline {
+  margin: 0 0 1.25rem;
+  font-size: 0.85rem;
+  color: var(--muted, #4d5f55);
+}
+
+.settings_label {
+  display: block;
+  margin-bottom: 0.4rem;
+  font-size: 0.88rem;
+  font-weight: 600;
+}
+
+.settings_field_row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+}
+
+.settings_input {
+  flex: 1 1 10rem;
+  min-width: 0;
+  min-height: 44px;
+  padding: 0.55rem 0.8rem;
+  background: #fff;
+  border: 1px solid #b9c4b4;
+  border-radius: 8px;
+  font-family: "IBM Plex Mono", ui-monospace, monospace;
+  font-size: 1rem; /* 16px stops iOS zooming on focus */
+  color: var(--ink, #1c2b29);
+}
+
+.settings_input:focus {
+  border-color: var(--teal-deep, #0b646c);
+}
+
+.settings_input[aria-invalid="true"] {
+  border-color: var(--negative, #b23a2e);
+}
+
+.main_settings .settings_help {
+  margin: 0.5rem 0 0;
+  font-size: 0.8rem;
+  line-height: 1.5;
+  color: var(--muted, #4d5f55);
+}
+
+.main_settings .settings_error {
+  margin: 0.5rem 0 0;
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: var(--negative, #b23a2e);
+}
+
+.main_settings .settings_saved {
+  margin: 0.5rem 0 0;
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: var(--positive, #2f7a4d);
+}
+
+.main_settings .settings_saved:empty {
+  margin: 0;
+}
+
+.settings_actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin-top: 1rem;
+}
+
+/* ------------------------------------------------------------------
+   Buttons and links
+------------------------------------------------------------------- */
+
+.settings_btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 44px;
+  padding: 0.6rem 1.25rem;
+  border: 1px solid var(--ink, #1c2b29);
+  border-radius: 8px;
+  background: var(--ink, #1c2b29);
+  color: var(--paper, #edf1e9);
+  font-family: inherit;
+  font-size: 0.95rem;
+  font-weight: 500;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.settings_btn:hover:not(:disabled) {
+  background: var(--teal-deep, #0b646c);
+  border-color: var(--teal-deep, #0b646c);
+}
+
+.settings_btn:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+.settings_btn_secondary {
+  background: transparent;
+  color: var(--ink, #1c2b29);
+  border-color: #b9c4b4;
+}
+
+.settings_btn_secondary:hover:not(:disabled) {
+  background: transparent;
+  color: var(--teal-deep, #0b646c);
+  border-color: var(--teal-deep, #0b646c);
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .settings_btn,
+  .settings_back {
+    transition: background 0.15s ease, color 0.15s ease,
+      border-color 0.15s ease;
+  }
+}
+
+/* ------------------------------------------------------------------
+   Plans summary
+------------------------------------------------------------------- */
+
+.settings_plans {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.main_settings .settings_plans_amount {
+  margin: 0;
+  font-family: "IBM Plex Mono", ui-monospace, monospace;
+  font-weight: 500;
+  font-size: 1.5rem;
+  font-variant-numeric: tabular-nums;
+  overflow-wrap: anywhere;
+}
+
+.main_settings .settings_plans_caption {
+  margin: 0.25rem 0 0;
+  font-size: 0.85rem;
+  color: var(--muted, #4d5f55);
+}
+
+/* ------------------------------------------------------------------
+   Loading skeleton
+------------------------------------------------------------------- */
+
+.settings_skel {
+  background: #e1e8dc;
+  border-radius: 10px;
+}
+
+.settings_skel_title {
+  width: 9rem;
+  height: 2rem;
+  margin: 1rem 0 1.75rem;
+}
+
+.settings_skel_card {
+  height: 9rem;
+  margin-bottom: 1.25rem;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .settings_skel {
+    animation: settings_pulse 1.4s ease-in-out infinite;
+  }
+}
+
+@keyframes settings_pulse {
+  50% {
+    opacity: 0.55;
+  }
+}
+
+/* ------------------------------------------------------------------
+   Mobile
+------------------------------------------------------------------- */
+
+@media (max-width: 640px) {
+  .main_settings {
+    padding: 0.75rem 1rem 2.5rem;
+  }
+
+  .settings_card {
+    padding: 1.1rem 1.1rem 1.25rem;
+  }
+
+  .settings_details {
+    grid-template-columns: 1fr;
+    gap: 0.15rem;
+  }
+
+  .settings_details dd {
+    margin-bottom: 0.6rem;
+  }
+
+  .settings_actions .settings_btn,
+  .settings_field_row .settings_btn {
+    flex: 1 1 100%;
+  }
+}

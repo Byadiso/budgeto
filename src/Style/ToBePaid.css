@@ -1,0 +1,224 @@
+:root {
+  --ink: #1c2b29;
+  --paper: #edf1e9;
+  --paper-card: #ffffff;
+  --teal: #0e7c86;
+  --teal-deep: #0b646c;
+  --positive: #2f7a4d;
+  --negative: #b23a2e;
+  --line: #dde3d7;
+  --muted: #4d5f55;
+}
+
+:where(.tobepaid_page),
+:where(.tobepaid_page) *,
+:where(.tobepaid_page) *::before,
+:where(.tobepaid_page) *::after {
+  box-sizing: border-box;
+}
+
+.tobepaid_page :focus-visible {
+  outline: 2px solid var(--teal-deep);
+  outline-offset: 2px;
+}
+
+.tobepaid_page {
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 1.25rem 2rem 3rem;
+  background: var(--paper);
+  font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+    sans-serif;
+  color: var(--ink);
+  text-align: left;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .tobepaid_page {
+    animation: tobepaid_fade_in 0.4s ease both;
+  }
+}
+
+@keyframes tobepaid_fade_in {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.tobepaid_sr_only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* back + header */
+.tobepaid_back {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  min-height: 44px;
+  margin-left: -0.25rem;
+  text-decoration: none;
+  color: var(--muted);
+  font-size: 0.9rem;
+  font-weight: 500;
+}
+.tobepaid_back:hover { color: var(--ink); }
+
+.tobepaid_header { margin: 0.5rem 0 1.5rem; }
+
+.tobepaid_page .tobepaid_title {
+  margin: 0 0 0.3rem;
+  font-family: "Fraunces", Georgia, serif;
+  font-weight: 600;
+  font-size: clamp(1.7rem, 5vw, 2.1rem);
+  line-height: 1.15;
+  letter-spacing: -0.01em;
+  color: var(--ink);
+}
+
+.tobepaid_page .tobepaid_subhead {
+  margin: 0;
+  font-size: 0.92rem;
+  color: var(--muted);
+}
+
+/* summary */
+.tobepaid_summary {
+  margin-bottom: 1.5rem;
+  padding: 1.25rem 1.5rem;
+  background: var(--paper-card);
+  border: 1px solid var(--line);
+  border-top: 3px solid var(--negative);
+  border-radius: 12px;
+  box-shadow: 0 1px 2px rgba(28, 43, 41, 0.04);
+}
+
+.tobepaid_page .tobepaid_summary_label {
+  margin: 0 0 0.5rem;
+  font-size: 0.88rem;
+  font-weight: 600;
+  color: var(--ink);
+}
+
+.tobepaid_page .tobepaid_summary_amount {
+  margin: 0;
+  font-family: "IBM Plex Mono", ui-monospace, monospace;
+  font-weight: 500;
+  font-size: clamp(1.8rem, 6vw, 2.4rem);
+  line-height: 1.1;
+  font-variant-numeric: tabular-nums;
+  overflow-wrap: anywhere;
+  color: var(--ink);
+}
+.tobepaid_page .tobepaid_summary_amount.is_negative { color: var(--negative); }
+
+.tobepaid_page .tobepaid_summary_hint {
+  margin: 0.5rem 0 0;
+  font-size: 0.82rem;
+  color: var(--muted);
+}
+
+/* toolbar */
+.tobepaid_toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.6rem;
+  margin-bottom: 1.5rem;
+}
+
+.tobepaid_chips { display: flex; flex-wrap: wrap; gap: 0.4rem; }
+
+.tobepaid_chip {
+  min-height: 40px;
+  padding: 0.4rem 1rem;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: var(--paper-card);
+  color: var(--ink);
+  font-family: inherit;
+  font-size: 0.88rem;
+  font-weight: 500;
+  cursor: pointer;
+}
+.tobepaid_chip:hover { border-color: var(--teal); }
+.tobepaid_chip.is_active {
+  background: var(--teal);
+  border-color: var(--teal);
+  color: #fff;
+}
+
+.tobepaid_search {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  min-height: 40px;
+  padding: 0 0.75rem;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  background: var(--paper-card);
+  color: var(--muted);
+}
+.tobepaid_search input {
+  border: none;
+  outline: none;
+  background: transparent;
+  font-family: inherit;
+  font-size: 0.9rem;
+  color: var(--ink);
+  width: 170px;
+}
+.tobepaid_search:focus-within { border-color: var(--teal); }
+
+/* transactions */
+.tobepaid_section_head { margin-bottom: 0.85rem; }
+
+.tobepaid_page .tobepaid_section_title {
+  margin: 0;
+  font-family: "Fraunces", Georgia, serif;
+  font-weight: 500;
+  font-size: 1.15rem;
+  color: var(--ink);
+}
+
+.tobepaid_table { display: block; }
+
+.tobepaid_empty {
+  padding: 2.5rem 1.25rem;
+  text-align: center;
+  background: var(--paper-card);
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  color: var(--muted);
+}
+.tobepaid_page .tobepaid_empty p {
+  margin: 0 0 0.25rem;
+  font-weight: 500;
+  color: var(--ink);
+}
+.tobepaid_empty_sub { font-size: 0.9rem; }
+
+/* skeleton */
+.tobepaid_skel { background: #e1e8dc; border-radius: 10px; }
+.tobepaid_skel_title { width: 10rem; height: 2rem; margin: 1rem 0 1.5rem; }
+.tobepaid_skel_summary { height: 6.5rem; margin-bottom: 2rem; }
+.tobepaid_skel_table { height: 14rem; }
+
+@media (prefers-reduced-motion: no-preference) {
+  .tobepaid_skel { animation: tobepaid_pulse 1.4s ease-in-out infinite; }
+}
+@keyframes tobepaid_pulse { 50% { opacity: 0.55; } }
+
+@media (max-width: 640px) {
+  .tobepaid_page { padding: 0.75rem 1rem 2.5rem; }
+  .tobepaid_summary { padding: 1.1rem; }
+  .tobepaid_search { width: 100%; }
+  .tobepaid_search input { width: 100%; }
+}
