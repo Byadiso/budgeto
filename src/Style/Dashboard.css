@@ -1,259 +1,536 @@
-*,
-*::before,
-*::after {
-  box-sizing: border-box;
-}
-
-*:focus-visible {
-  outline: 2px solid var(--teal);
-  outline-offset: 2px;
-}
+/* @import must be the first rule in a stylesheet or browsers ignore it.
+   Better still: move it to <link> tags in index.html. */
+@import url("https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@500&display=swap");
 
 :root {
-  /* Budgeto ledger palette — shared with Planning.css */
+  /* Budgeto ledger palette, shared with LandingPage.css and Planning.css */
   --ink: #1c2b29;
   --paper: #edf1e9;
-  --paper-card: #fbfaf4;
+  --paper-card: #ffffff;
   --teal: #0e7c86;
   --teal-deep: #0b646c;
   --positive: #2f7a4d;
   --negative: #b23a2e;
   --amber: #b8863b;
   --slate: #556070;
-  --line: #cfd8cb;
-  --muted: #5b665f;
+  --line: #dde3d7;
+  --muted: #4d5f55;
 }
 
-@import url("https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@500&display=swap");
+/* Scoped reset (zero specificity) and focus ring */
+:where(.main_dashboard),
+:where(.main_dashboard) *,
+:where(.main_dashboard) *::before,
+:where(.main_dashboard) *::after {
+  box-sizing: border-box;
+}
+
+.main_dashboard :focus-visible {
+  outline: 2px solid var(--teal-deep);
+  outline-offset: 2px;
+}
+
+/* ------------------------------------------------------------------
+   Shell
+------------------------------------------------------------------- */
 
 .main_dashboard {
-  min-height: 100vh;
+  /* no min-height: the Navbar's <main> already fills the viewport, and a
+     second full-height box here made the page scroll for no reason */
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 2.5rem 2rem 3rem;
   background: var(--paper);
   font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
     sans-serif;
-  color: var(--ink) !important;
-  padding: 2rem;
-  max-width: 900px;
-  margin: 0 auto;
-  animation: dashboard_fade_in 0.4s ease both;
+  color: var(--ink);
 }
 
-@keyframes dashboard_fade_in {
-  from {
-    opacity: 0;
-    transform: translateY(8px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+.dashboard_sr_only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
 }
 
-/* header */
+/* ------------------------------------------------------------------
+   Header
+------------------------------------------------------------------- */
 
 .dashboard_header {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 0.25rem 1rem;
   margin-bottom: 1.75rem;
 }
 
-.dashboard_eyebrow {
-  margin: 0 0 4px;
-  font-size: 0.85rem;
-  font-weight: 500;
-  color: var(--teal-deep) !important;
-}
-
-.dashboard_header h1 {
+.main_dashboard .dashboard_header h1 {
   margin: 0;
   font-family: "Fraunces", Georgia, serif;
   font-weight: 600;
-  font-size: 2.1rem;
+  font-size: clamp(1.7rem, 5vw, 2.1rem);
+  line-height: 1.15;
   letter-spacing: -0.01em;
-  color: var(--ink) !important;
+  color: var(--ink);
 }
 
-.dashboard_subtitle {
-  font-size: 0.95rem;
-  color: var(--muted) !important;
+.main_dashboard .dashboard_period {
   margin: 0;
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: var(--muted);
 }
 
-/* hero goal panel */
+/* ------------------------------------------------------------------
+   Sections
+------------------------------------------------------------------- */
 
-.dashboard_hero {
-  background: var(--ink);
-  border-radius: 12px;
-  padding: 1.5rem 1.75rem;
-  margin-bottom: 1.5rem;
-  box-shadow: none;
+.dashboard_section {
+  margin-top: 2.25rem;
 }
 
-.dashboard_hero,
-.dashboard_hero * {
-  color: var(--paper) !important;
+.main_dashboard .dashboard_section_title {
+  margin: 0 0 0.85rem;
+  font-family: "Fraunces", Georgia, serif;
+  font-weight: 500;
+  font-size: 1.15rem;
+  color: var(--ink);
 }
-
-.dashboard_hero:hover {
-  transform: none;
-  box-shadow: none;
-}
-
-/* statement grid */
 
 .dashboard_grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-  gap: 1rem;
+  grid-template-columns: 1fr;
+  gap: 0.75rem;
 }
 
-.dashboard_item {
-  position: relative;
-  background: var(--paper-card);
-  border-radius: 10px;
-  padding: 1.1rem 1.25rem 1.1rem 1.5rem;
-  border: 1px solid var(--line);
-  box-shadow: none;
-  transition: transform 0.15s ease, box-shadow 0.15s ease;
-  overflow: hidden;
-}
+/* ------------------------------------------------------------------
+   Goal card
+------------------------------------------------------------------- */
 
-.dashboard_item::before {
-  content: "";
-  position: absolute;
-  left: 0;
-  top: 10px;
-  bottom: 10px;
-  width: 4px;
-  border-radius: 2px;
-  background: var(--teal);
-}
-
-.dashboard_item:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 6px 16px -8px rgba(28, 43, 41, 0.25);
-}
-
-.dashboard_item,
-.dashboard_item * {
-  color: var(--ink) !important;
-}
-
-/* category accents — same stripe language as the Planning register rows */
-
-.home_amount::before,
-.planned_account::before {
-  background: var(--amber);
-}
-
-.bank_account::before {
-  background: var(--ink);
-}
-
-.benefit_account::before {
-  background: var(--positive);
-}
-
-.super_account::before {
-  background: var(--slate);
-}
-
-.payback::before {
-  background: var(--negative);
-}
-
-/* loading state */
-
-.dashboard_loading {
+.dashboard_goal {
   display: flex;
-  justify-content: center;
+  align-items: flex-end;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 0.75rem 2rem;
+  padding: 1.5rem 1.75rem;
+  background: var(--paper-card);
+  border: 1px solid var(--line);
+  border-top: 3px solid var(--teal-deep);
+  border-radius: 12px;
+  box-shadow: 0 1px 2px rgba(28, 43, 41, 0.04);
+}
+
+.main_dashboard .dashboard_goal_label {
+  margin: 0 0 0.2rem;
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--ink);
+}
+
+.main_dashboard .dashboard_goal_deadline {
+  margin: 0;
+  font-size: 0.85rem;
+  color: var(--muted);
+}
+
+.main_dashboard .dashboard_goal_amount {
+  margin: 0;
+  font-family: "IBM Plex Mono", ui-monospace, monospace;
+  font-weight: 500;
+  font-size: clamp(1.9rem, 6vw, 2.5rem);
+  line-height: 1;
+  font-variant-numeric: tabular-nums;
+  color: var(--ink);
+}
+
+/* ------------------------------------------------------------------
+   Stat cards
+------------------------------------------------------------------- */
+
+.dashboard_stat {
+  --accent: var(--teal);
+  min-width: 0;
+  padding: 1.1rem 1.25rem;
+  background: var(--paper-card);
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  box-shadow: 0 1px 2px rgba(28, 43, 41, 0.04);
+}
+
+.dashboard_stat[data-accent="bank"] {
+  --accent: var(--ink);
+}
+.dashboard_stat[data-accent="benefits"] {
+  --accent: var(--positive);
+}
+.dashboard_stat[data-accent="super"] {
+  --accent: var(--slate);
+}
+.dashboard_stat[data-accent="others"] {
+  --accent: var(--negative);
+}
+.dashboard_stat[data-accent="plan"] {
+  --accent: var(--amber);
+}
+
+.dashboard_stat_label {
+  display: flex;
   align-items: center;
-  min-height: 50vh;
-  background: var(--paper);
-  font-family: "Inter", sans-serif;
-  font-size: 1.05rem;
-  color: var(--muted) !important;
+  gap: 0.5rem;
+  margin: 0 0 0.6rem;
+  font-family: inherit;
+  font-size: 0.88rem;
+  font-weight: 600;
+  line-height: 1.3;
+  color: var(--ink);
 }
 
-/* reduced motion */
+.dashboard_stat_label::before {
+  content: "";
+  flex: none;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--accent);
+}
 
-@media (prefers-reduced-motion: reduce) {
-  .main_dashboard {
-    animation: none;
+.main_dashboard .dashboard_stat_amount {
+  margin: 0;
+  font-family: "IBM Plex Mono", ui-monospace, monospace;
+  font-weight: 500;
+  font-size: clamp(1.3rem, 2.6vw, 1.55rem);
+  line-height: 1.1;
+  font-variant-numeric: tabular-nums;
+  overflow-wrap: anywhere;
+  color: var(--ink);
+}
+
+.main_dashboard .dashboard_stat_amount.is_negative {
+  color: var(--negative);
+}
+
+.main_dashboard .dashboard_stat_caption {
+  margin: 0.5rem 0 0;
+  font-size: 0.8rem;
+  line-height: 1.4;
+  color: var(--muted);
+}
+
+/* Phones: stat cards become compact rows (label left, amount right) */
+@media (max-width: 559px) {
+  .dashboard_stat {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    align-items: center;
+    column-gap: 1rem;
+    padding: 0.95rem 1rem;
   }
-  .dashboard_item:hover {
-    transform: none;
+
+  .dashboard_stat_label {
+    margin: 0;
+  }
+
+  .main_dashboard .dashboard_stat_amount {
+    grid-column: 2;
+    grid-row: 1 / span 2;
+    text-align: right;
+  }
+
+  .main_dashboard .dashboard_stat_caption {
+    grid-column: 1;
+    margin: 0.2rem 0 0 1rem; /* aligns under the label text, past the dot */
   }
 }
 
-/* responsive */
+/* Tablet and up */
+@media (min-width: 560px) {
+  .dashboard_grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1rem;
+  }
+}
+
+@media (min-width: 880px) {
+  .dashboard_grid_accounts {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+}
+
+/* ------------------------------------------------------------------
+   Loading skeleton
+------------------------------------------------------------------- */
+
+.dashboard_skel {
+  background: #e1e8dc;
+  border-radius: 10px;
+}
+
+.dashboard_skel_title {
+  width: 11rem;
+  height: 2rem;
+  margin-bottom: 1.75rem;
+}
+
+.dashboard_skel_goal {
+  height: 6.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.dashboard_skel_row {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 0.75rem;
+}
+
+.dashboard_skel_card {
+  height: 5.5rem;
+}
+
+@media (min-width: 560px) {
+  .dashboard_skel_row {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .dashboard_skel {
+    animation: dashboard_pulse 1.4s ease-in-out infinite;
+  }
+}
+
+@keyframes dashboard_pulse {
+  50% {
+    opacity: 0.55;
+  }
+}
+
+/* ------------------------------------------------------------------
+   Mobile shell
+------------------------------------------------------------------- */
 
 @media (max-width: 640px) {
   .main_dashboard {
-    padding: 1.25rem 1rem;
+    padding: 1.5rem 1rem 2.5rem;
   }
 
-  .dashboard_grid {
-    grid-template-columns: 1fr;
+  .dashboard_section {
+    margin-top: 1.75rem;
   }
 
-  .dashboard_hero {
+  .dashboard_goal {
     padding: 1.25rem;
+    align-items: flex-start;
+    flex-direction: column;
   }
 }
 
 
 
+/* ------------------------------------------------------------------
+   Goal progress
+------------------------------------------------------------------- */
 
-.superbet_page {
-  max-width: 900px;
-  margin: 0 auto;
-  padding: 2rem;
-}
-
-.superbet_back {
-  display: inline-flex;
+.dashboard_goal_top {
+  display: flex;
   align-items: center;
-  gap: 0.4rem;
-  text-decoration: none;
-  color: var(--muted, #5c6e63);
-  font-size: 0.9rem;
-  margin-bottom: 1.5rem;
-  transition: color 0.15s ease;
+  justify-content: space-between;
+  gap: 1rem;
 }
 
-.superbet_back:hover {
-  color: var(--ink, #1c2b29);
+.dashboard_progress {
+  height: 8px;
+  margin-top: 1rem;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.18);
+  overflow: hidden;
 }
 
-.superbet_header {
-  margin-bottom: 1.5rem;
+.dashboard_progress_fill {
+  display: block;
+  height: 100%;
+  border-radius: 999px;
+  background: #8fd6a9;
+  transition: width 0.4s ease;
 }
 
-.superbet_header h1 {
-  margin: 0 0 0.3rem;
-  font-family: "Fraunces", Georgia, serif;
-  font-weight: 500;
-  font-size: 1.8rem;
-  color: var(--ink, #1c2b29);
+.main_dashboard .dashboard_progress_text {
+  margin: 0.5rem 0 0;
+  font-size: 0.85rem;
+  color: #d6e2de;
 }
 
-.superbet_subhead {
+/* ------------------------------------------------------------------
+   Section head, period chips, links
+------------------------------------------------------------------- */
+
+.dashboard_section_head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.6rem;
+  margin-bottom: 0.85rem;
+}
+
+.dashboard_section_head .dashboard_section_title {
   margin: 0;
-  font-size: 0.9rem;
-  color: var(--muted, #5c6e63);
 }
 
-.superbet_summary {
-  margin-bottom: 2rem;
+.dashboard_chips {
+  display: flex;
+  gap: 0.4rem;
 }
 
-.superbet_table {
-  width: 100%;
+.dashboard_chip {
+  min-height: 38px;
+  padding: 0.3rem 0.95rem;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: #fff;
+  color: var(--ink);
+  font-family: inherit;
+  font-size: 0.86rem;
+  font-weight: 500;
+  cursor: pointer;
 }
 
-.superbet_loading,
-.superbet_empty {
-  padding: 2.5rem 0;
+.dashboard_chip:hover {
+  border-color: var(--teal);
+}
+
+.dashboard_chip.is_active {
+  background: var(--teal);
+  border-color: var(--teal);
+  color: #fff;
+}
+
+.dashboard_link {
+  color: var(--teal-deep);
+  font-size: 0.88rem;
+  font-weight: 600;
+  text-decoration: underline;
+}
+
+/* ------------------------------------------------------------------
+   Recent activity
+------------------------------------------------------------------- */
+
+.dashboard_recent {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  background: #fff;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.dashboard_recent_item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 0.8rem 1.1rem;
+}
+
+.dashboard_recent_item + .dashboard_recent_item {
+  border-top: 1px solid var(--line);
+}
+
+.dashboard_recent_main {
+  min-width: 0;
+}
+
+.main_dashboard .dashboard_recent_title {
+  margin: 0;
+  font-weight: 500;
+  overflow-wrap: anywhere;
+  color: var(--ink);
+}
+
+.main_dashboard .dashboard_recent_meta {
+  margin: 2px 0 0;
+  font-size: 0.78rem;
+  color: var(--muted);
+}
+
+.main_dashboard .dashboard_recent_amount {
+  margin: 0;
+  font-family: "IBM Plex Mono", ui-monospace, monospace;
+  font-weight: 500;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+  color: var(--positive);
+}
+
+.main_dashboard .dashboard_recent_amount.is_negative {
+  color: var(--negative);
+}
+
+.dashboard_recent_empty {
+  padding: 1.5rem;
   text-align: center;
-  color: var(--muted, #5c6e63);
-  font-size: 0.95rem;
+  background: #fff;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  color: var(--muted);
+}
+
+/* ------------------------------------------------------------------
+   Quick links
+------------------------------------------------------------------- */
+
+.dashboard_links {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0.75rem;
+}
+
+.dashboard_tile {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding: 0.9rem 1.1rem;
+  background: #fff;
+  border: 1px solid var(--line);
+  border-left: 4px solid var(--teal);
+  border-radius: 12px;
+  text-decoration: none;
+  color: var(--ink);
+  transition: transform 0.12s ease, border-color 0.12s ease;
+}
+
+.dashboard_tile:hover {
+  transform: translateY(-1px);
+  border-color: var(--teal);
+}
+
+.dashboard_tile_label {
+  font-weight: 600;
+}
+
+.dashboard_tile_hint {
+  font-size: 0.8rem;
+  color: var(--muted);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .dashboard_tile,
+  .dashboard_progress_fill {
+    transition: none;
+  }
+}
+
+@media (max-width: 640px) {
+  .dashboard_links {
+    grid-template-columns: repeat(2, 1fr);
+  }
 }

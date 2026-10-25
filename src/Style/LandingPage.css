@@ -1,3 +1,5 @@
+/* Fonts: for best performance, move this to <link> tags in index.html
+   (preconnect to fonts.googleapis.com and fonts.gstatic.com, then the stylesheet). */
 @import url("https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@500&display=swap");
 
 :root {
@@ -7,43 +9,52 @@
   --positive: #2f7a4d;
   --negative: #b23a2e;
   --line: #dde3d7;
-  --muted: #5c6e63;
-  --muted-bg: #d9ebdb;
+  --muted: #4d5f55; /* darkened for AA contrast on small text */
 }
 
-/* defensive reset — scoped to this page only, so nothing leaks in from
-   global styles (this is what was centering text and blacking out the footer) */
-.main_Landing,
-.main_Landing * {
+/* ------------------------------------------------------------------
+   Defensive reset, scoped to this page.
+   :where() gives it ZERO specificity, so every component class below
+   can override it without a fight.
+------------------------------------------------------------------- */
+:where(.main_Landing),
+:where(.main_Landing) *,
+:where(.main_Landing) *::before,
+:where(.main_Landing) *::after {
   box-sizing: border-box;
 }
 
-.main_Landing h1,
-.main_Landing h2,
-.main_Landing p,
-.main_Landing span,
-.main_Landing div,
-.main_Landing a {
-  text-align: left;
+:where(.main_Landing) :where(h1, h2, p) {
   margin: 0;
 }
 
-*:focus-visible {
+:where(.main_Landing) :where(h1, h2, p, span, div, a, footer, header) {
+  text-align: inherit;
+}
+
+.main_Landing :focus-visible {
   outline: 2px solid var(--teal-deep);
   outline-offset: 2px;
 }
 
 .main_Landing {
-  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh; /* fallback */
+  min-height: 100dvh;
   background: var(--paper);
   font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
     sans-serif;
   color: var(--ink);
+  text-align: left;
 }
 
-/* top bar */
+/* ------------------------------------------------------------------
+   Top bar
+------------------------------------------------------------------- */
 
 .landing_topbar {
+  width: 100%;
   max-width: 900px;
   margin: 0 auto;
   padding: 2.5rem 2rem 0;
@@ -76,7 +87,6 @@
   border: 1px solid var(--line);
   border-radius: 999px;
   background: var(--paper);
-  transition: border-color 0.15s ease, color 0.15s ease;
 }
 
 .landing_topbar_cta:hover {
@@ -84,21 +94,24 @@
   color: var(--teal-deep);
 }
 
-/* hero */
+/* Held back until auth state is known, so "Sign in" never flashes */
+.landing_pending {
+  visibility: hidden;
+}
+
+/* ------------------------------------------------------------------
+   Hero
+------------------------------------------------------------------- */
 
 .landing_hero {
+  width: 100%;
   max-width: 900px;
   margin: 0 auto;
-  padding: 6rem 2rem 6rem;
+  padding: 6rem 2rem;
   display: grid;
   grid-template-columns: 1fr auto;
   gap: 4rem;
   align-items: center;
-  text-align: left;
-}
-
-.landing_hero_copy {
-  text-align: left;
 }
 
 .landing_hero_copy h1 {
@@ -109,7 +122,6 @@
   line-height: 1.15;
   letter-spacing: -0.01em;
   max-width: 13ch;
-  text-align: left;
 }
 
 .landing_hero_sub {
@@ -118,7 +130,6 @@
   line-height: 1.6;
   color: var(--muted);
   max-width: 34ch;
-  text-align: left;
 }
 
 .landing_primary_cta {
@@ -132,7 +143,6 @@
   font-weight: 500;
   padding: 0.75rem 1.4rem;
   border-radius: 8px;
-  transition: background 0.15s ease, transform 0.1s ease;
 }
 
 .landing_primary_cta:hover {
@@ -145,33 +155,51 @@
 
 .landing_hero_note {
   display: block;
-  margin-top: 0.9rem;
+  margin: 0.9rem 0 0;
   font-size: 0.8rem;
   color: var(--muted);
-  text-align: left;
 }
 
-/* recent activity */
+/* ------------------------------------------------------------------
+   Example ledger card
+------------------------------------------------------------------- */
 
 .landing_recent {
   display: flex;
   flex-direction: column;
   gap: 0.9rem;
-  min-width: 240px;
+  min-width: 19rem;
   padding: 1.5rem;
   background: #fff;
   border: 1px solid var(--line);
   border-radius: 12px;
   box-shadow: 0 1px 2px rgba(28, 43, 41, 0.04);
-  text-align: left;
 }
 
 .landing_recent_label {
+  display: block;
+  margin: 0 0 0.3rem;
   font-size: 0.72rem;
   color: var(--muted);
-  margin-bottom: 0.3rem;
   text-transform: uppercase;
   letter-spacing: 0.04em;
+}
+
+.landing_balances {
+  display: grid;
+  grid-template-columns: repeat(3, auto);
+  justify-content: space-between;
+  gap: 0.75rem;
+  padding-bottom: 0.9rem;
+  border-bottom: 1px solid var(--line);
+}
+
+.landing_balances strong {
+  display: block;
+  font-family: "IBM Plex Mono", monospace;
+  font-weight: 500;
+  font-size: 0.95rem;
+  font-variant-numeric: tabular-nums;
 }
 
 .landing_recent_row {
@@ -180,6 +208,7 @@
   gap: 1rem;
   font-family: "IBM Plex Mono", monospace;
   font-size: 0.8rem;
+  font-variant-numeric: tabular-nums;
 }
 
 .landing_recent_date {
@@ -203,9 +232,12 @@
   color: var(--negative);
 }
 
-/* features — intentional 3-column grid */
+/* ------------------------------------------------------------------
+   Features
+------------------------------------------------------------------- */
 
 .landing_features {
+  width: 100%;
   max-width: 900px;
   margin: 0 auto;
   padding: 4rem 2rem 5rem;
@@ -218,7 +250,6 @@
 .landing_feature {
   padding-top: 1.75rem;
   border-top: 2px solid var(--teal-deep);
-  text-align: left;
 }
 
 .landing_feature h2 {
@@ -226,7 +257,6 @@
   font-family: "Fraunces", Georgia, serif;
   font-weight: 500;
   font-size: 1.15rem;
-  text-align: left;
 }
 
 .landing_feature p {
@@ -234,34 +264,57 @@
   font-size: 0.92rem;
   line-height: 1.6;
   color: var(--muted);
-  text-align: left;
 }
 
-/* footer */
+/* ------------------------------------------------------------------
+   Footer: margin-top:auto pins it to the bottom on tall screens
+------------------------------------------------------------------- */
 
 .landing_footer {
+  width: 100%;
   max-width: 900px;
-  margin: 0 auto;
+  margin: auto auto 0;
   padding: 2rem 2rem 3rem;
   font-size: 0.8rem;
   color: var(--muted);
   background: var(--paper);
   border-top: 1px solid var(--line);
-  text-align: left;
 }
 
-/* responsive */
+/* ------------------------------------------------------------------
+   Motion (only if the visitor hasn't asked for less)
+------------------------------------------------------------------- */
 
-@media (max-width: 640px) {
-  .landing_hero {
-    grid-template-columns: 1fr;
-    padding: 3.5rem 1.5rem 3.5rem;
-    gap: 2.5rem;
+@media (prefers-reduced-motion: no-preference) {
+  .landing_topbar_cta {
+    transition: border-color 0.15s ease, color 0.15s ease;
   }
 
-  .landing_recent {
-    width: 100%;
-    min-width: 0;
+  .landing_primary_cta {
+    transition: background 0.15s ease, transform 0.1s ease;
+  }
+}
+
+/* ------------------------------------------------------------------
+   Responsive
+------------------------------------------------------------------- */
+
+@media (max-width: 800px) {
+  .landing_features {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+}
+
+@media (max-width: 640px) {
+  .landing_topbar {
+    padding: 1.75rem 1.5rem 0;
+  }
+
+  .landing_hero {
+    grid-template-columns: 1fr;
+    padding: 3.5rem 1.5rem;
+    gap: 2.5rem;
   }
 
   .landing_hero_copy h1 {
@@ -269,13 +322,13 @@
     max-width: none;
   }
 
-  .landing_topbar {
-    padding: 1.75rem 1.5rem 0;
+  .landing_recent {
+    width: 100%;
+    min-width: 0;
   }
 
   .landing_features {
-    grid-template-columns: 1fr;
-    padding: 3rem 1.5rem 3rem;
+    padding: 3rem 1.5rem;
   }
 
   .landing_footer {

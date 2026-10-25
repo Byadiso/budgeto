@@ -1,0 +1,458 @@
+@import url("https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@500&display=swap");
+
+:root {
+  --ink: #1c2b29;
+  --paper: #edf1e9;
+  --paper-card: #fbfaf4;
+  --teal: #0e7c86;
+  --teal-deep: #0b646c;
+  --positive: #2f7a4d;
+  --negative: #b23a2e;
+  --line: #cfd8cb;
+  --muted: #4d5f55;
+  --amber: #a8741a;
+}
+
+:where(.month_page),
+:where(.month_page) *,
+:where(.month_page) *::before,
+:where(.month_page) *::after {
+  box-sizing: border-box;
+}
+
+.month_page :focus-visible {
+  outline: 2px solid var(--teal-deep);
+  outline-offset: 2px;
+}
+
+.month_page {
+  display: block;
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 1.25rem 2rem 3.5rem;
+  background: var(--paper);
+  font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+    sans-serif;
+  color: var(--ink);
+  text-align: left;
+}
+
+/* every block stacks vertically at full width, whatever global rules exist */
+.month_page > div,
+.month_page > header {
+  width: 100%;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .month_page { animation: month_fade_in 0.4s ease both; }
+}
+@keyframes month_fade_in {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.month_sr_only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* ---------- back + header ---------- */
+
+.month_back {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  min-height: 44px;
+  margin-left: -0.25rem;
+  text-decoration: none;
+  color: var(--muted);
+  font-size: 0.9rem;
+  font-weight: 500;
+}
+.month_back:hover { color: var(--teal-deep); }
+
+.month_header {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 1rem;
+  margin: 0.5rem 0 1.5rem;
+}
+
+.month_page .month_eyebrow {
+  margin: 0 0 4px;
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: var(--teal-deep);
+}
+
+.month_page .month_title {
+  margin: 0;
+  font-family: "Fraunces", Georgia, serif;
+  font-weight: 600;
+  font-size: clamp(1.8rem, 5vw, 2.2rem);
+  line-height: 1.15;
+  letter-spacing: -0.01em;
+  color: var(--ink);
+}
+
+.month_page .month_daysleft {
+  margin: 0;
+  padding: 0.3rem 0.8rem;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: #fff;
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--teal-deep);
+  white-space: nowrap;
+}
+
+/* ---------- balance hero ---------- */
+
+.month_hero {
+  display: block;
+  margin-bottom: 1rem;
+  padding: 1.5rem 1.6rem;
+  background: var(--ink);
+  border-radius: 14px;
+}
+
+.month_page .month_hero_label {
+  display: block;
+  margin: 0;
+  font-size: 0.78rem;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #a9bdb8;
+}
+
+.month_page .month_hero_amount {
+  display: block;
+  margin: 8px 0 14px;
+  font-family: "IBM Plex Mono", ui-monospace, monospace;
+  font-weight: 500;
+  font-size: clamp(2.1rem, 8vw, 3rem);
+  line-height: 1.1;
+  font-variant-numeric: tabular-nums;
+  overflow-wrap: anywhere;
+}
+.month_page .month_hero_amount.is_positive { color: #8fd6a9; }
+.month_page .month_hero_amount.is_negative { color: #f0a198; }
+
+.month_progress {
+  height: 6px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.16);
+  overflow: hidden;
+}
+.month_progress_fill {
+  display: block;
+  height: 100%;
+  border-radius: 999px;
+  background: #a9bdb8;
+}
+
+.month_page .month_hero_hint {
+  display: block;
+  margin: 10px 0 2px;
+  font-size: 0.85rem;
+  color: #d6e2de;
+}
+.month_page .month_hero_formula {
+  display: block;
+  margin: 0;
+  font-size: 0.76rem;
+  color: #8fa39e;
+}
+
+/* ---------- type tiles ---------- */
+
+.month_tiles {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 0.75rem;
+  margin-bottom: 1rem;
+}
+
+.month_tile {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 8px;
+  padding: 1rem 1.1rem;
+  background: #fff;
+  border: 1px solid var(--line);
+  border-left: 5px solid var(--line);
+  border-radius: 12px;
+  text-align: left;
+  font-family: inherit;
+  color: var(--ink);
+  cursor: pointer;
+  transition: transform 0.12s ease, border-color 0.12s ease;
+}
+.month_tile:hover { transform: translateY(-1px); border-color: var(--teal); }
+.month_tile.is_income { border-left-color: var(--positive); }
+.month_tile.is_expense { border-left-color: var(--negative); }
+.month_tile.is_extra { border-left-color: var(--amber); }
+.month_tile.is_side { border-left-color: var(--teal); }
+.month_tile.is_active {
+  border-color: var(--teal);
+  box-shadow: 0 0 0 2px rgba(14, 124, 134, 0.18);
+}
+
+.month_tile_label {
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+.month_tile_value {
+  font-family: "IBM Plex Mono", ui-monospace, monospace;
+  font-weight: 500;
+  font-size: 1.15rem;
+  font-variant-numeric: tabular-nums;
+  overflow-wrap: anywhere;
+}
+
+/* ---------- spending pace (one card, three stats) ---------- */
+
+.month_pace {
+  display: block;
+  margin-bottom: 1.5rem;
+  padding: 1.1rem 1.3rem 1.2rem;
+  background: var(--paper-card);
+  border: 1px solid var(--line);
+  border-radius: 12px;
+}
+
+.month_page .month_pace_title {
+  margin: 0 0 0.9rem;
+  font-family: "Fraunces", Georgia, serif;
+  font-weight: 500;
+  font-size: 1.05rem;
+  color: var(--ink);
+}
+
+.month_pace_grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.month_pace_item {
+  min-width: 0;
+  padding: 0 1.1rem;
+}
+.month_pace_item:first-child { padding-left: 0; }
+.month_pace_item + .month_pace_item { border-left: 1px solid var(--line); }
+
+.month_page .month_pace_label {
+  margin: 0 0 6px;
+  font-size: 0.76rem;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+.month_page .month_pace_value {
+  margin: 0;
+  font-family: "IBM Plex Mono", ui-monospace, monospace;
+  font-weight: 500;
+  font-size: 1.15rem;
+  font-variant-numeric: tabular-nums;
+  overflow-wrap: anywhere;
+}
+.month_page .month_pace_sub {
+  margin: 4px 0 0;
+  font-size: 0.82rem;
+  color: var(--teal-deep);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* ---------- filters ---------- */
+
+.month_filters {
+  display: block;
+  margin-bottom: 1.75rem;
+}
+
+.month_filters_row {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 200px);
+  gap: 0.75rem;
+  margin-bottom: 0.9rem;
+}
+
+.month_search,
+.month_select {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  width: 100%;
+  min-height: 46px;
+  padding: 0 0.85rem;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  background: #fff;
+  color: var(--muted);
+}
+.month_search:focus-within,
+.month_select:focus-within { border-color: var(--teal); }
+
+.month_search input,
+.month_select select {
+  width: 100%;
+  border: none;
+  outline: none;
+  background: transparent;
+  font-family: inherit;
+  font-size: 0.92rem;
+  color: var(--ink);
+}
+.month_select select { cursor: pointer; }
+
+.month_chips { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+
+.month_chip {
+  min-height: 40px;
+  padding: 0.35rem 1rem;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: #fff;
+  color: var(--ink);
+  font-family: inherit;
+  font-size: 0.87rem;
+  font-weight: 500;
+  cursor: pointer;
+}
+.month_chip:hover { border-color: var(--teal); }
+.month_chip.is_active {
+  background: var(--teal);
+  border-color: var(--teal);
+  color: #fff;
+}
+.month_chip_count {
+  margin-left: 6px;
+  font-family: "IBM Plex Mono", ui-monospace, monospace;
+  font-size: 0.78rem;
+  opacity: 0.75;
+}
+
+/* SuperBet on/off chip, set apart from the type chips */
+.month_chip_toggle {
+  border-style: dashed;
+  color: var(--muted);
+}
+.month_chip_toggle.is_on {
+  border-style: solid;
+  border-color: var(--teal);
+  background: rgba(14, 124, 134, 0.1);
+  color: var(--teal-deep);
+}
+
+/* ---------- entries ---------- */
+
+.month_section_head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 1rem;
+  width: 100%;
+  margin-bottom: 0.85rem;
+}
+
+.month_page .month_section_title {
+  margin: 0;
+  font-family: "Fraunces", Georgia, serif;
+  font-weight: 500;
+  font-size: 1.2rem;
+  color: var(--ink);
+}
+
+.month_page .month_count {
+  margin: 0;
+  font-size: 0.86rem;
+  color: var(--muted);
+}
+
+.month_link_btn {
+  margin-left: 0.75rem;
+  padding: 0;
+  border: none;
+  background: none;
+  color: var(--teal-deep);
+  font-family: inherit;
+  font-size: inherit;
+  font-weight: 600;
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.month_table {
+  display: block;
+  width: 100%;
+  overflow-x: auto;
+}
+
+.month_empty {
+  padding: 2.5rem 1.25rem;
+  text-align: center;
+  background: #fff;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  color: var(--muted);
+}
+.month_page .month_empty p {
+  margin: 0 0 0.25rem;
+  font-weight: 500;
+  color: var(--ink);
+}
+.month_empty_sub { font-size: 0.9rem; }
+
+/* ---------- skeleton ---------- */
+
+.month_skel { background: #e1e8dc; border-radius: 10px; }
+.month_skel_title { width: 10rem; height: 2rem; margin: 1rem 0 1.5rem; }
+.month_skel_hero { height: 9rem; margin-bottom: 1.5rem; }
+.month_skel_table { height: 14rem; }
+
+@media (prefers-reduced-motion: no-preference) {
+  .month_skel { animation: month_pulse 1.4s ease-in-out infinite; }
+}
+@keyframes month_pulse { 50% { opacity: 0.55; } }
+@media (prefers-reduced-motion: reduce) {
+  .month_tile { transition: none; }
+}
+
+/* ---------- tablet / mobile ---------- */
+
+@media (max-width: 820px) {
+  .month_tiles { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+
+@media (max-width: 640px) {
+  .month_page { padding: 0.75rem 1rem 2.5rem; }
+  .month_hero { padding: 1.2rem; }
+
+  .month_pace_grid { grid-template-columns: 1fr; }
+  .month_pace_item,
+  .month_pace_item:first-child { padding: 0.75rem 0; }
+  .month_pace_item:first-child { padding-top: 0; }
+  .month_pace_item + .month_pace_item {
+    border-left: none;
+    border-top: 1px solid var(--line);
+  }
+
+  .month_filters_row { grid-template-columns: 1fr; }
+}
