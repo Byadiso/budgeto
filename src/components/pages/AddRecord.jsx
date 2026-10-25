@@ -104,6 +104,7 @@ function AddRecord() {
                   <option value="expense">Expense</option>
                   <option value="extra">Extra</option>
                   <option value="isNotMine">Is Not Mine</option>
+                  <option value="sideHustle">Side Hustle</option>
                 </select>
               </div>
 

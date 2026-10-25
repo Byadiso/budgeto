@@ -11,6 +11,7 @@ import AddRecord from "./components/pages/AddRecord.jsx";
 import SuperBet from "./components/pages/SuperBet.jsx";
 import Benefits from "./components/pages/Benefits.jsx";
 import Motivation from "./components/pages/Motivation.jsx";
+import SideHustle from "./components/pages/SideHustle.jsx";
 import Planning from "./components/pages/Planning.jsx";
 import Transaction from "./components/pages/Transaction.jsx";
 import ArchiveCard from "./components/pages/Archived.jsx";
@@ -41,7 +42,9 @@ function App() {
           <Route path="/Add" element={<AddRecord />} />
           <Route path="/Reports" element={<Reports />} />
 
-          <Route path="/Motivation" element={<Motivation />} />          
+          <Route path="/Motivation" element={<Motivation />} />   
+
+          <Route path="/SideHustle" element={<SideHustle />} />         
 
           <Route path="/Super" element={<SuperBet />} />
           <Route path="/Transaction/:id" element={<Transaction />} />

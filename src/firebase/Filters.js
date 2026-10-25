@@ -281,8 +281,214 @@ export function filterWhatIsNotMine(transactions) {
 
 
 
+// Works with Firestore Timestamp, {seconds}, seconds/ms numbers, Date or string
+export const toDate = (value) => {
+  if (!value) return null;
+  if (typeof value.toDate === "function") return value.toDate();
+  if (typeof value === "object" && value.seconds) {
+    return new Date(value.seconds * 1000);
+  }
+  if (typeof value === "number") {
+    return new Date(value < 1e12 ? value * 1000 : value);
+  }
+  const d = new Date(value);
+  return isNaN(d.getTime()) ? null : d;
+};
+
+// period: "currentMonth" | "lastMonth" | "year" | "all"
+export const getPeriodRange = (period) => {
+  const now = new Date();
+  const y = now.getFullYear();
+  const m = now.getMonth();
+
+  switch (period) {
+    case "currentMonth":
+      return { start: new Date(y, m, 1), end: new Date(y, m + 1, 0, 23, 59, 59, 999) };
+    case "lastMonth":
+      return { start: new Date(y, m - 1, 1), end: new Date(y, m, 0, 23, 59, 59, 999) };
+    case "year":
+      return { start: new Date(y, 0, 1), end: new Date(y, 11, 31, 23, 59, 59, 999) };
+    default:
+      return null; // "all"
+  }
+};
+
+// SuperBet: keyword match + period filter, with totals split by type
+export function filterSuperBet(transactions, keywords, period = "currentMonth") {
+  if (!transactions) {
+    return { filteredTransactions: [], totalSpent: 0, totalWon: 0, net: 0 };
+  }
+
+  const kws = (keywords || []).map((k) => k.toLowerCase());
+  const range = getPeriodRange(period);
+  let totalSpent = 0;
+  let totalWon = 0;
+
+  const filteredTransactions = [...transactions]
+    .filter((t) => {
+      const title = (t.title || "").toLowerCase();
+      if (!kws.some((k) => title.includes(k))) return false;
+
+      if (range) {
+        const d = toDate(t.createdAt);
+        if (!d || d < range.start || d > range.end) return false;
+      }
+
+      const type = (t.type || "").toLowerCase();
+      const amount = parseFloat(t.amount) || 0;
+      if (type === "expense") totalSpent += amount;
+      else if (type === "income") totalWon += amount;
+
+      return true;
+    })
+    .sort(
+      (a, b) =>
+        (toDate(b.createdAt)?.getTime() || 0) -
+        (toDate(a.createdAt)?.getTime() || 0)
+    );
+
+  return { filteredTransactions, totalSpent, totalWon, net: totalWon - totalSpent };
+}
 
 
 
 
 
+// ToBePaid: "isNotMine" entries + period + title search
+export function filterToBePaid(transactions, period = "all", search = "") {
+  if (!transactions) {
+    return { filteredToBePaid: [], totalToBePaid: 0 };
+  }
+
+  const range = getPeriodRange(period);
+  const term = search.trim().toLowerCase();
+  let totalToBePaid = 0;
+
+  const filteredToBePaid = [...transactions]
+    .filter((t) => {
+      // "isNotMine" / "is_not_mine" / "IsNotMine" all become "isnotmine"
+      const type = (t.type || "").toLowerCase().replace(/[\s_-]/g, "");
+      if (type !== "isnotmine") return false;
+
+      if (range) {
+        const d = toDate(t.createdAt);
+        if (!d || d < range.start || d > range.end) return false;
+      }
+
+      if (term && !(t.title || "").toLowerCase().includes(term)) return false;
+
+      totalToBePaid += parseFloat(t.amount) || 0;
+      return true;
+    })
+    .sort(
+      (a, b) =>
+        (toDate(b.createdAt)?.getTime() || 0) -
+        (toDate(a.createdAt)?.getTime() || 0)
+    );
+
+  return { filteredToBePaid, totalToBePaid };
+}
+
+
+
+// Motivation: "extra" (work benefits) + period + title search
+export function filterMotivation(transactions, period = "currentMonth", search = "") {
+  if (!transactions) {
+    return { filteredMotivation: [], totalMotivation: 0, biggest: 0 };
+  }
+
+  const range = getPeriodRange(period);
+  const term = search.trim().toLowerCase();
+  let totalMotivation = 0;
+  let biggest = 0;
+
+  const filteredMotivation = [...transactions]
+    .filter((t) => {
+      const type = (t.type || "").toLowerCase().replace(/[\s_-]/g, "");
+      if (type !== "extra") return false;
+
+      if (range) {
+        const d = toDate(t.createdAt);
+        if (!d || d < range.start || d > range.end) return false;
+      }
+
+      if (term && !(t.title || "").toLowerCase().includes(term)) return false;
+
+      const amount = parseFloat(t.amount) || 0;
+      totalMotivation += amount;
+      if (amount > biggest) biggest = amount;
+      return true;
+    })
+    .sort(
+      (a, b) =>
+        (toDate(b.createdAt)?.getTime() || 0) -
+        (toDate(a.createdAt)?.getTime() || 0)
+    );
+
+  return { filteredMotivation, totalMotivation, biggest };
+}
+
+
+
+// Dashboard: month summary without SuperBet entries
+export function summarizePeriod(transactions, keywords, period = "currentMonth") {
+  const range = getPeriodRange(period);
+  const kws = (keywords || []).map((k) => k.toLowerCase());
+  const s = { income: 0, expense: 0, extra: 0, sidehustle: 0 };
+
+  (transactions || []).forEach((t) => {
+    const title = (t.title || "").toLowerCase();
+    if (kws.some((k) => title.includes(k))) return;
+
+    if (range) {
+      const d = toDate(t.createdAt);
+      if (!d || d < range.start || d > range.end) return;
+    }
+
+    const type = (t.type || "").toLowerCase().replace(/[\s_-]/g, "");
+    if (type in s) s[type] += parseFloat(t.amount) || 0;
+  });
+
+  s.net = s.income - s.expense; // benefits and side hustle are kept apart
+  s.savingsRate = s.income > 0 ? (s.net / s.income) * 100 : null;
+  return s;
+}
+
+
+
+// Side hustle: type + period + title search
+export function filterSideHustle(transactions, period = "all", search = "") {
+  if (!transactions) {
+    return { filteredSideHustle: [], totalSideHustle: 0, biggest: 0 };
+  }
+
+  const range = getPeriodRange(period);
+  const term = search.trim().toLowerCase();
+  let totalSideHustle = 0;
+  let biggest = 0;
+
+  const filteredSideHustle = [...transactions]
+    .filter((t) => {
+      const type = (t.type || "").toLowerCase().replace(/[\s_-]/g, "");
+      if (type !== "sidehustle") return false;
+
+      if (range) {
+        const d = toDate(t.createdAt);
+        if (!d || d < range.start || d > range.end) return false;
+      }
+
+      if (term && !(t.title || "").toLowerCase().includes(term)) return false;
+
+      const amount = parseFloat(t.amount) || 0;
+      totalSideHustle += amount;
+      if (amount > biggest) biggest = amount;
+      return true;
+    })
+    .sort(
+      (a, b) =>
+        (toDate(b.createdAt)?.getTime() || 0) -
+        (toDate(a.createdAt)?.getTime() || 0)
+    );
+
+  return { filteredSideHustle, totalSideHustle, biggest };
+}

@@ -1,23 +1,6 @@
-*,
-*::before,
-*::after {
-  box-sizing: border-box;
-}
-
-*:focus-visible {
-  outline: 2px solid var(--teal);
-  outline-offset: 2px;
-}
+@import url("https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@500&display=swap");
 
 :root {
-  /* legacy vars kept for anything else in the app referencing them */
-  --blueColor: #008dda;
-  --blueActiveColor: #29b4e2;
-  --redColor: #fa1717;
-  --greyColor: #4b4a4a;
-  --backgroundGrey: rgba(244, 244, 244, 0.918);
-
-  /* Budgeto ledger palette */
   --ink: #1c2b29;
   --paper: #edf1e9;
   --paper-card: #fbfaf4;
@@ -26,337 +9,544 @@
   --positive: #2f7a4d;
   --negative: #b23a2e;
   --line: #cfd8cb;
-  --muted: #5b665f;
+  --muted: #4d5f55;
 }
 
-@import url("https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@500&display=swap");
+:where(.ledger_page),
+:where(.ledger_page) *,
+:where(.ledger_page) *::before,
+:where(.ledger_page) *::after {
+  box-sizing: border-box;
+}
+
+.ledger_page :focus-visible {
+  outline: 2px solid var(--teal-deep);
+  outline-offset: 2px;
+}
 
 .ledger_page {
   min-height: 100vh;
   background: var(--paper);
-  font-family: "Inter", -apple-system, BlinkMacSystemFont, sans-serif;
+  font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+    sans-serif;
   color: var(--ink);
-  padding-bottom: 60px;
+  text-align: left;
+  padding-bottom: 90px;
 }
 
-.ledger_topbar {
-  padding: 20px 24px 0;
+.ledger_sr_only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
 }
+
+/* ---------- top bar + header ---------- */
+
+.ledger_topbar { padding: 12px 24px 0; }
 
 .ledger_back {
   display: inline-flex;
   align-items: center;
   gap: 6px;
+  min-height: 44px;
   text-decoration: none;
   color: var(--muted);
   font-size: 0.9rem;
   font-weight: 500;
-  transition: color 0.15s ease;
 }
-
-.ledger_back:hover {
-  color: var(--ink);
-}
+.ledger_back:hover { color: var(--teal-deep); }
 
 .ledger_register {
-  max-width: 640px;
+  max-width: 960px;
   margin: 0 auto;
-  padding: 24px 24px 0;
-  animation: ledger_fade_in 0.4s ease both;
+  padding: 8px 24px 0;
 }
 
+@media (prefers-reduced-motion: no-preference) {
+  .ledger_register { animation: ledger_fade_in 0.4s ease both; }
+}
 @keyframes ledger_fade_in {
-  from {
-    opacity: 0;
-    transform: translateY(8px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
 }
 
 .ledger_header {
-  margin-bottom: 20px;
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 1.25rem;
 }
 
-.ledger_month {
+.ledger_page .ledger_month {
   margin: 0 0 4px;
   font-size: 0.85rem;
   font-weight: 500;
   color: var(--teal-deep);
-  letter-spacing: 0.02em;
 }
 
-.ledger_title {
+.ledger_page .ledger_title {
   margin: 0;
   font-family: "Fraunces", Georgia, serif;
   font-weight: 600;
-  font-size: 2.1rem;
+  font-size: clamp(1.8rem, 5vw, 2.2rem);
   letter-spacing: -0.01em;
-  color: var(--ink) !important;
+  color: var(--ink);
 }
 
-/* balance panel */
+/* ---------- buttons ---------- */
 
-.ledger_balance {
-  background: var(--paper-card);
-  border: 1px solid var(--line);
-  border-radius: 10px;
-  padding: 20px 24px;
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
-  margin-bottom: 20px;
-}
-
-.ledger_balance_label {
-  font-size: 0.8rem;
-  color: var(--muted) !important;
-  font-weight: 500;
-}
-
-.ledger_balance_amount {
-  margin: 0;
-  font-family: "IBM Plex Mono", monospace;
-  font-variant-numeric: tabular-nums;
-  font-size: 2rem;
-  font-weight: 500;
-  transition: color 0.3s ease;
-}
-
-.ledger_currency {
-  font-size: 0.95rem;
-  font-weight: 500;
-  color: var(--muted) !important;
-}
-
-/* add entry */
-
-.ledger_add_row {
-  width: 100%;
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  padding: 14px 18px;
-  background: transparent;
-  border: 1.5px dashed var(--line);
-  border-radius: 10px;
-  color: var(--teal-deep);
-  font-family: inherit;
-  font-size: 0.95rem;
-  font-weight: 600;
-  cursor: pointer;
-  margin-bottom: 24px;
-  transition: border-color 0.15s ease, background 0.15s ease;
-}
-
-.ledger_add_row:hover {
-  border-color: var(--teal);
-  background: rgba(14, 124, 134, 0.06);
-}
-
-.ledger_add_icon {
+.ledger_primary_btn {
   display: inline-flex;
   align-items: center;
+  gap: 6px;
+  min-height: 44px;
+  padding: 0 1.1rem;
+  border: none;
+  border-radius: 10px;
+  background: var(--teal);
+  color: #fff;
+  font-family: inherit;
+  font-size: 0.92rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.15s ease;
+}
+.ledger_primary_btn:hover { background: var(--teal-deep); }
+
+.ledger_link_btn {
+  margin-left: 0.6rem;
+  padding: 0;
+  border: none;
+  background: none;
+  color: var(--teal-deep);
+  font-family: inherit;
+  font-size: inherit;
+  font-weight: 600;
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.ledger_fab {
+  display: none;
+  position: fixed;
+  right: 18px;
+  bottom: 18px;
+  width: 56px;
+  height: 56px;
+  align-items: center;
   justify-content: center;
-  width: 22px;
-  height: 22px;
+  border: none;
   border-radius: 50%;
   background: var(--teal);
   color: #fff;
+  box-shadow: 0 6px 16px rgba(14, 124, 134, 0.35);
+  cursor: pointer;
+  z-index: 20;
 }
 
-/* entries list */
+/* ---------- overview card ---------- */
+
+.ledger_balance {
+  display: block;
+  margin-bottom: 1.25rem;
+  padding: 1.3rem 1.5rem;
+  background: #fff;
+  border: 1px solid var(--line);
+  border-top: 3px solid var(--teal);
+  border-radius: 12px;
+  box-shadow: 0 1px 2px rgba(28, 43, 41, 0.04);
+}
+
+.ledger_balance_label {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--ink);
+}
+
+.ledger_page .ledger_balance_amount {
+  margin: 6px 0 2px;
+  font-family: "IBM Plex Mono", ui-monospace, monospace;
+  font-weight: 500;
+  font-size: clamp(1.9rem, 6vw, 2.6rem);
+  line-height: 1.1;
+  font-variant-numeric: tabular-nums;
+  overflow-wrap: anywhere;
+}
+
+.ledger_currency {
+  font-family: "Inter", sans-serif;
+  font-size: 0.5em;
+  font-weight: 500;
+  color: var(--muted);
+}
+
+.ledger_page .ledger_balance_meta {
+  margin: 0 0 1rem;
+  font-size: 0.85rem;
+  color: var(--muted);
+}
+
+.ledger_split {
+  display: flex;
+  height: 14px;
+  overflow: hidden;
+  border-radius: 999px;
+  background: var(--line);
+  gap: 2px;
+}
+.ledger_split_seg {
+  display: block;
+  min-width: 4px;
+  height: 100%;
+}
+
+.ledger_legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem 1.1rem;
+  margin: 0.8rem 0 0;
+  padding: 0;
+  list-style: none;
+}
+.ledger_legend_item {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.82rem;
+}
+.ledger_legend_dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  display: inline-block;
+}
+.ledger_legend_name { color: var(--ink); font-weight: 500; }
+.ledger_legend_pct {
+  font-family: "IBM Plex Mono", ui-monospace, monospace;
+  color: var(--muted);
+}
+
+.ledger_page .ledger_insight {
+  margin: 0.9rem 0 0;
+  padding-top: 0.8rem;
+  border-top: 1px dashed var(--line);
+  font-size: 0.88rem;
+  color: var(--teal-deep);
+}
+
+/* ---------- filters: roomier, labelled, stacked ---------- */
+
+.ledger_controls {
+  display: block;
+  margin: 0 0 1.25rem;
+  padding: 1.1rem 1.25rem 1.25rem;
+  background: #fff;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+}
+
+.ledger_page .ledger_controls_title {
+  margin: 0 0 0.9rem;
+  font-family: "Fraunces", Georgia, serif;
+  font-weight: 500;
+  font-size: 1.05rem;
+  color: var(--ink);
+}
+
+.ledger_controls_grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 220px);
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.ledger_field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  min-width: 0;
+}
+
+.ledger_field_label {
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.ledger_search,
+.ledger_sort {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  width: 100%;
+  min-height: 44px;
+  padding: 0 0.75rem;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  background: var(--paper-card);
+  color: var(--muted);
+}
+.ledger_search:focus-within,
+.ledger_sort:focus-within { border-color: var(--teal); }
+
+.ledger_search input,
+.ledger_sort select {
+  width: 100%;
+  border: none;
+  outline: none;
+  background: transparent;
+  font-family: inherit;
+  font-size: 0.9rem;
+  color: var(--ink);
+}
+.ledger_sort select { cursor: pointer; }
+
+/* chips wrap onto new lines instead of a scrollbar */
+.ledger_chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.ledger_chip {
+  min-height: 40px;
+  padding: 0.35rem 1rem;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: #fff;
+  color: var(--ink);
+  font-family: inherit;
+  font-size: 0.86rem;
+  font-weight: 500;
+  cursor: pointer;
+}
+.ledger_chip:hover { border-color: var(--teal); }
+.ledger_chip.is_active {
+  background: var(--teal);
+  border-color: var(--teal);
+  color: #fff;
+}
+.ledger_chip_count {
+  margin-left: 4px;
+  font-family: "IBM Plex Mono", ui-monospace, monospace;
+  font-size: 0.78rem;
+  opacity: 0.75;
+}
+
+/* ---------- entries ---------- */
 
 .ledger_entries {
   display: flex;
   flex-direction: column;
-  border-top: 1px solid var(--line);
+  align-items: stretch;
+  gap: 0.6rem;
+  width: 100%;
+}
+
+.ledger_page .ledger_filter_note {
+  margin: 0 2px 2px;
+  font-size: 0.84rem;
+  color: var(--muted);
 }
 
 .ledger_entry {
   position: relative;
   display: flex;
   align-items: center;
-  gap: 16px;
-  padding: 16px 16px 16px 20px;
-  border-bottom: 1px solid var(--line);
-  background: var(--paper-card);
-  transition: transform 0.15s ease, box-shadow 0.15s ease;
+  gap: 1rem;
+  width: 100%;
+  padding: 0.9rem 1rem 0.9rem 1.25rem;
+  background: #fff;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  overflow: hidden;
+  transition: border-color 0.15s ease, transform 0.15s ease;
 }
-
 .ledger_entry:hover {
-  transform: translateX(4px);
-  box-shadow: -4px 0 0 var(--teal);
+  border-color: var(--teal);
+  transform: translateY(-1px);
 }
 
 .ledger_entry_stripe {
   position: absolute;
-  left: 0;
-  top: 8px;
-  bottom: 8px;
-  width: 4px;
-  border-radius: 2px;
-  background: var(--teal);
+  inset: 0 auto 0 0;
+  width: 6px;
 }
 
-.ledger_entry_main {
-  flex: 1;
-  min-width: 0;
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
-}
+.ledger_entry_main { flex: 1; min-width: 0; }
 
-.ledger_entry_name {
-  margin: 0;
+.ledger_page .ledger_entry_name {
+  margin: 0 0 4px;
   font-family: "Fraunces", Georgia, serif;
-  font-weight: 600;
+  font-weight: 500;
   font-size: 1.05rem;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  color: var(--ink) !important;
+  overflow-wrap: anywhere;
+  color: var(--ink);
 }
 
 .ledger_entry_category {
-  align-self: flex-start;
-  font-size: 0.75rem;
+  display: inline-block;
+  padding: 2px 10px;
+  border-radius: 999px;
+  font-size: 0.74rem;
   font-weight: 600;
-  padding: 2px 8px;
-  border-radius: 20px;
-  background: rgba(14, 124, 134, 0.12);
-  color: var(--teal-deep);
 }
 
-.ledger_entry_amount {
-  font-family: "IBM Plex Mono", monospace;
-  font-variant-numeric: tabular-nums;
-  font-size: 1rem;
-  font-weight: 500;
-  white-space: nowrap;
-  color: var(--ink) !important;
+.ledger_share {
+  height: 5px;
+  margin-top: 8px;
+  max-width: 260px;
+  border-radius: 999px;
+  background: #e6ebe1;
+  overflow: hidden;
+}
+.ledger_share_fill {
+  display: block;
+  height: 100%;
+  border-radius: 999px;
+  background: var(--teal);
 }
 
-.ledger_entry_actions {
+.ledger_entry_figures {
   display: flex;
-  gap: 4px;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 2px;
+  text-align: right;
 }
+.ledger_entry_amount {
+  font-family: "IBM Plex Mono", ui-monospace, monospace;
+  font-weight: 500;
+  font-size: 1.1rem;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+.ledger_entry_pct {
+  font-size: 0.74rem;
+  color: var(--muted);
+}
+
+.ledger_entry_actions { display: flex; gap: 4px; }
 
 .ledger_icon_btn {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 32px;
-  height: 32px;
-  border-radius: 8px;
-  border: none;
+  min-width: 40px;
+  min-height: 40px;
+  padding: 0 8px;
+  border: 1px solid transparent;
+  border-radius: 10px;
   background: transparent;
   color: var(--muted);
+  font-family: inherit;
   cursor: pointer;
-  transition: background 0.15s ease, color 0.15s ease;
 }
-
-.ledger_icon_btn:hover {
-  background: rgba(14, 124, 134, 0.1);
-  color: var(--teal-deep);
+.ledger_icon_btn:hover { background: #eef2ea; color: var(--ink); }
+.ledger_icon_btn--danger:hover { color: var(--negative); background: #f7e6e3; }
+.ledger_icon_btn--danger.is_confirming {
+  background: var(--negative);
+  color: #fff;
 }
+.ledger_confirm_text { font-size: 0.8rem; font-weight: 600; }
 
-.ledger_icon_btn--danger:hover {
-  background: rgba(178, 58, 46, 0.1);
-  color: var(--negative);
-}
-
-/* empty state */
+/* ---------- empty ---------- */
 
 .ledger_empty {
-  padding: 40px 20px;
+  padding: 2.5rem 1.25rem;
   text-align: center;
-  border-bottom: 1px solid var(--line);
+  background: #fff;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  color: var(--muted);
+}
+.ledger_page .ledger_empty p {
+  margin: 0 0 0.3rem;
+  font-weight: 500;
+  color: var(--ink);
+}
+.ledger_page .ledger_empty .ledger_empty_sub {
+  margin-bottom: 1.1rem;
+  font-weight: 400;
+  font-size: 0.9rem;
   color: var(--muted);
 }
 
-.ledger_empty p {
-  margin: 0 0 4px;
-}
-
-.ledger_empty_sub {
-  font-size: 0.9rem;
-}
-
-/* archive panel */
+/* ---------- archive ---------- */
 
 .ledger_archive {
-  margin-top: 28px;
-  padding: 20px;
-  border-radius: 10px;
-  background: var(--ink);
-  color: var(--paper);
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 16px;
+  gap: 1rem;
   flex-wrap: wrap;
+  margin-top: 2rem;
+  padding: 1.1rem 1.3rem;
+  background: var(--paper-card);
+  border: 1px dashed var(--line);
+  border-radius: 12px;
 }
-
 .ledger_archive_text h4 {
-  margin: 0 0 4px;
+  margin: 0 0 2px;
   font-family: "Fraunces", Georgia, serif;
-  font-weight: 600;
-  font-size: 1.1rem;
+  font-weight: 500;
+  font-size: 1.05rem;
 }
-
 .ledger_archive_text p {
   margin: 0;
-  font-size: 0.85rem;
-  color: rgba(237, 241, 233, 0.75);
+  font-size: 0.88rem;
+  color: var(--muted);
 }
 
-/* reduced motion */
+/* ---------- skeleton ---------- */
+
+.ledger_skel { background: #e1e8dc; border-radius: 10px; }
+.ledger_skel_title { width: 10rem; height: 2.2rem; margin: 1rem 0 1.25rem; }
+.ledger_skel_hero { height: 9rem; margin-bottom: 1.25rem; }
+.ledger_skel_row { height: 4.2rem; margin-bottom: 0.6rem; }
+
+@media (prefers-reduced-motion: no-preference) {
+  .ledger_skel { animation: ledger_pulse 1.4s ease-in-out infinite; }
+}
+@keyframes ledger_pulse { 50% { opacity: 0.55; } }
 
 @media (prefers-reduced-motion: reduce) {
-  .ledger_register {
-    animation: none;
-  }
-  .ledger_entry:hover {
-    transform: none;
-  }
+  .ledger_entry { transition: none; }
 }
 
-/* responsive */
+/* ---------- mobile ---------- */
 
-@media only screen and (max-width: 720px) {
-  .ledger_register {
-    padding: 20px 16px 0;
-  }
+@media (max-width: 640px) {
+  .ledger_topbar { padding: 8px 16px 0; }
+  .ledger_register { padding: 8px 16px 0; }
 
-  .ledger_balance_amount {
-    font-size: 1.6rem;
-  }
+  .ledger_header .ledger_primary_btn { display: none; } /* FAB takes over */
+  .ledger_fab { display: inline-flex; }
+
+  .ledger_balance { padding: 1.1rem; }
+  .ledger_controls { padding: 1rem; }
+  .ledger_controls_grid { grid-template-columns: 1fr; }
 
   .ledger_entry {
     flex-wrap: wrap;
-    padding-left: 18px;
+    gap: 0.5rem 0.75rem;
   }
-
-  .ledger_entry_amount {
-    order: 3;
-    margin-left: auto;
-  }
-
+  .ledger_entry_main { flex: 1 1 60%; }
+  .ledger_entry_figures { align-items: flex-end; }
   .ledger_entry_actions {
-    order: 4;
+    flex: 1 1 100%;
+    justify-content: flex-end;
+    border-top: 1px solid var(--line);
+    padding-top: 6px;
   }
-}
-
-@media only screen and (max-width: 920px) {
-  body {
-    min-width: 360px;
-  }
-
-  .dashboard_content {
-    display: flex;
-    flex-direction: column;
-  }
+  .ledger_share { max-width: none; }
 }

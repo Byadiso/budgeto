@@ -4,10 +4,17 @@ import { Link } from "react-router-dom";
 import PaymentsIcon from "@mui/icons-material/Payments";
 import { isAuthenticated } from "../../firebase/Authentication";
 
+// Sample data only. Balances match the rows below (2,450.00 − 86.40 − 650.00).
+const BALANCES = [
+  { label: "Bank", value: "1,713.60" },
+  { label: "Benefits", value: "120.00" },
+  { label: "For others", value: "45.00" },
+];
+
 const RECENT = [
   { date: "03 Sep", entry: "Salary", amount: "+2,450.00", sign: "up" },
-  { date: "04 Sep", entry: "Groceries", amount: "-86.40", sign: "down" },
-  { date: "06 Sep", entry: "Rent", amount: "-650.00", sign: "down" },
+  { date: "04 Sep", entry: "Groceries", amount: "\u221286.40", sign: "down" },
+  { date: "06 Sep", entry: "Rent", amount: "\u2212650.00", sign: "down" },
 ];
 
 const FEATURES = [
@@ -17,7 +24,7 @@ const FEATURES = [
   },
   {
     title: "Plans that adjust the total",
-    body: "Set a monthly budget once and it feeds straight into your groceries number — no spreadsheet to keep in sync.",
+    body: "Set a monthly budget once and it feeds straight into your groceries number \u2014 no spreadsheet to keep in sync.",
   },
   {
     title: "A line for what isn't yours",
@@ -26,11 +33,21 @@ const FEATURES = [
 ];
 
 function LandingPage() {
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  // null = still checking, so we don't flash "Sign in" for logged-in users
+  const [isLoggedIn, setIsLoggedIn] = useState(null);
 
   useEffect(() => {
     isAuthenticated(setIsLoggedIn);
+
+    // Fallback: if the auth check never answers, treat as signed out
+    const timer = setTimeout(() => {
+      setIsLoggedIn((prev) => (prev === null ? false : prev));
+    }, 1500);
+
+    return () => clearTimeout(timer);
   }, []);
+
+  const pending = isLoggedIn === null ? " landing_pending" : "";
 
   return (
     <div className="main_Landing">
@@ -39,19 +56,27 @@ function LandingPage() {
           <PaymentsIcon fontSize="small" />
           <span>Budgeto</span>
         </Link>
-        <Link to="/Dashboard" className="landing_topbar_cta">
-          {isLoggedIn ? "Dashboard" : "Sign in"}
-        </Link>
+        <nav aria-label="Primary">
+          <Link
+            to="/Dashboard"
+            className={`landing_topbar_cta${pending}`}
+          >
+            {isLoggedIn ? "Dashboard" : "Sign in"}
+          </Link>
+        </nav>
       </header>
 
       <main className="landing_hero">
         <div className="landing_hero_copy">
-          <h1>Every euro, accounted for.</h1>
+          <h1>Every cent, accounted for.</h1>
           <p className="landing_hero_sub">
-            A quiet ledger for income, benefits, and planned spending —
-            each kept where it belongs.
+            A quiet ledger for income, benefits, and planned spending
+            {"\u2014"}each kept where it belongs.
           </p>
-          <Link to="/Dashboard" className="landing_primary_cta">
+          <Link
+            to="/Dashboard"
+            className={`landing_primary_cta${pending}`}
+          >
             {isLoggedIn ? "Open your ledger" : "Get started"}
           </Link>
           <span className="landing_hero_note">
@@ -60,7 +85,16 @@ function LandingPage() {
         </div>
 
         <div className="landing_recent" aria-hidden="true">
-          <span className="landing_recent_label">Recent</span>
+          <div className="landing_balances">
+            {BALANCES.map((b) => (
+              <div key={b.label}>
+                <span className="landing_recent_label">{b.label}</span>
+                <strong>{b.value}</strong>
+              </div>
+            ))}
+          </div>
+
+          <span className="landing_recent_label">Example</span>
           {RECENT.map((row) => (
             <div className="landing_recent_row" key={row.entry}>
               <span className="landing_recent_date">{row.date}</span>
@@ -73,7 +107,7 @@ function LandingPage() {
         </div>
       </main>
 
-      <section className="landing_features">
+      <section className="landing_features" aria-label="Features">
         {FEATURES.map((feature) => (
           <div className="landing_feature" key={feature.title}>
             <h2>{feature.title}</h2>
